@@ -15,13 +15,20 @@ return new class extends Migration
     {
         Schema::create('jadwal_bimbels', function (Blueprint $table) {
             $table->id();
-            $table->integer('siswas_id');
-            $table->integer('sesis_id');
-            $table->integer('programs_x_kelas_id');
-            $table->integer('mapels_id');
-            $table->integer('tentors_x_mapels_id');
+            $table->unsignedBigInteger('siswas_id');
+            $table->unsignedBigInteger('sesis_id');
+            $table->unsignedBigInteger('programs_x_kelas_id');
+            $table->unsignedBigInteger('mapels_id');
+            $table->unsignedBigInteger('tentors_x_mapels_id');
             $table->date('tanggal_bimbel');
             $table->timestamps();
+
+            $table->foreign('siswas_id')->references('id')->on('siswas');
+            $table->foreign('programs_x_kelas_id')->references('id')->on('programs_x_kelas');
+            $table->foreign('mapels_id')->references('id')->on('mapels');
+            $table->foreign('tentors_x_mapels_id')->references('id')->on('tentors_x_mapels');
+
+
         });
     }
 

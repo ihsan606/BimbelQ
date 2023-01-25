@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('programs_x_kelas', function (Blueprint $table) {
             $table->id();
-            $table->integer('programs_id');
-            $table->integer('kelas_id');
+            $table->unsignedBigInteger('programs_id');
+            $table->unsignedBigInteger('kelas_id');
             $table->integer('tarif_belajar');
             $table->integer('tarif_tentor');
             $table->timestamps();
+            $table->foreign('programs_id')->references('id')->on('programs');
+            $table->foreign('kelas_id')->references('id')->on('kelas');
         });
     }
 

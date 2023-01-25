@@ -15,10 +15,15 @@ return new class extends Migration
     {
         Schema::create('siswa_absensis', function (Blueprint $table) {
             $table->id();
-            $table->integer('siswas_id');
-            $table->integer('jadwal_bimbel_id');
+            $table->unsignedBigInteger('siswas_id');
+            $table->unsignedBigInteger('jadwal_bimbel_id');
             $table->boolean('absensi_status');
             $table->timestamps();
+
+            $table->foreign('siswas_id')->references('id')->on('siswas');
+            $table->foreign('jadwal_bimbel_id')->references('id')->on('jadwal_bimbels');
+
+
         });
     }
 

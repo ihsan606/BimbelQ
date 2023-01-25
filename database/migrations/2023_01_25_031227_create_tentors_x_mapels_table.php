@@ -15,9 +15,14 @@ return new class extends Migration
     {
         Schema::create('tentors_x_mapels', function (Blueprint $table) {
             $table->id();
-            $table->integer('tentors_id');
-            $table->integer('mapels_id');
+            $table->unsignedBigInteger('tentor_id');
+            $table->unsignedBigInteger('mapel_id');
+            $table->foreign('tentor_id')->references('id')->on('tentors');
+            $table->foreign('mapel_id')->references('id')->on('mapels');
+
             $table->timestamps();
+
+
         });
     }
 
