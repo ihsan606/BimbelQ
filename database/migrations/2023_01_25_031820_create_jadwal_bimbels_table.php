@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('siswas_id')->references('id')->on('siswas');
+            $table->foreign('sesis_id')->references('id')->on('sesis');
             $table->foreign('programs_x_kelas_id')->references('id')->on('programs_x_kelas');
             $table->foreign('mapels_id')->references('id')->on('mapels');
             $table->foreign('tentors_id')->references('id')->on('tentors');
