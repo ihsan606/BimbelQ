@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class gaji_tentor extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function tentor(){
+        return $this->belongsTo(gaji_tentor::class);
+    }
 }

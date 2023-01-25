@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Programs_x_kelas extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+
 }

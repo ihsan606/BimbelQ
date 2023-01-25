@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class tentor_absensi extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+
 }
