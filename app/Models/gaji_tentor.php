@@ -12,6 +12,6 @@ class gaji_tentor extends Model
     protected $guarded = ['id'];
 
     public function tentor(){
-        return $this->belongsTo(gaji_tentor::class);
+        return $this->belongsTo(Tentor::class);
     }
 }

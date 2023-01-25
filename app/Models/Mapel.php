@@ -10,4 +10,12 @@ class Mapel extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function tentor_x_mapel(){
+        return $this->hasMany(Tentor_x_mapel::class);
+    }
+
+    public function mapel(){
+        return $this->hasMany(Mapel::class);
+    }
+
 }

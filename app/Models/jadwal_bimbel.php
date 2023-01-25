@@ -22,4 +22,21 @@ class jadwal_bimbel extends Model
         return $this->belongsTo(Programs_x_kelas::class);
     }
 
+    public function mapel(){
+        return $this->belongsTo(Mapel::class);
+    }
+
+    public function tentor(){
+        return $this->belongsTo(Tentor::class);
+    }
+
+    public function siswa_absensi(){
+        return $this->hasMany(siswa_absensi::class);
+    }
+
+    public function tentor_absensi(){
+        return $this->hasMany(tentor_absensi::class);
+    }
+
+
 }

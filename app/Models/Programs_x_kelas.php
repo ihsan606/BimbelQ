@@ -10,4 +10,17 @@ class Programs_x_kelas extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function program(){
+        return $this->belongsTo(Program::class);
+    }
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
+    }
+
+    public function jadwal_bimbel(){
+        return $this->hasMany(jadwal_bimbel::class);
+    }
+
+
 }

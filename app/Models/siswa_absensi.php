@@ -10,4 +10,13 @@ class siswa_absensi extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function siswa(){
+        return $this->belongsTo(Siswa::class);
+    }
+
+    public function jadwal_bimbel(){
+        return $this->belongsTo(jadwal_bimbel::class);
+    }
+
+
 }

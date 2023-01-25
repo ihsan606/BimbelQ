@@ -10,4 +10,9 @@ class Kelas extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function program_x_kelas(){
+        return $this->hasMany(Program_x_kelas::class);
+    }
+
+
 }
