@@ -9,12 +9,18 @@
         "laravel-vite-plugin": "^0.5.0",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
+        "tailwindcss": "^3.2.4",
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.2.1",
+        "@fortawesome/free-regular-svg-icons": "^6.2.1",
+        "@fortawesome/free-solid-svg-icons": "^6.2.1",
+        "@fortawesome/react-fontawesome": "^0.2.0",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.7",
+        "daisyui": "^2.47.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2"
     }
