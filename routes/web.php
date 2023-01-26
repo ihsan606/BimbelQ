@@ -21,3 +21,13 @@ Route::resource('/users', \App\Http\Controllers\UserController::class);
 
 Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
 
+//prefix "apps"
+Route::prefix('apps')->group(function() {
+    
+    //route resource programs
+    Route::resource('/program', \App\Http\Controllers\Apps\ProgramController::class);
+
+    //route resource sesis
+    Route::resource('/sesi', \App\Http\Controllers\Apps\SesiController::class);
+
+});
