@@ -7,6 +7,7 @@
     @viteReactRefresh
     @vite('resources/js/app.jsx')
     @inertiaHead
+    @vite('resources/css/app.css')
     <style>
       body {
         background-color: lightgray
