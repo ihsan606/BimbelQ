@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
+use App\Models\Mapel;
 use Illuminate\Http\Request;
 
-class ClassController extends Controller
+class MapelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class ClassController extends Controller
      */
     public function index()
     {
-       $classes = Kelas::when(request()->q, function($classes) {
-           $classes = $classes->where('kelas_name', 'like', '%'. request()->q . '%');
-       })->latest('id')->get();
+        $mapels = Mapel::when(request()->q, function($mapels) {
+            $mapels = $mapels->where('mapels_name', 'like', '%'. request()->q . '%');
+        })->latest('id')->get();
 
-        return inertia('Class/Index', [
-            'classes' => $classes
+        return inertia('Mapels/Index', [
+            'mapels' => $mapels
         ]);
 
 
@@ -44,11 +44,11 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kelas_name'          => 'required',
+            'mapels_name'          => 'required',
         ]);
 
-        $class = Kelas::create([
-            'kelas_name' => $request->kelas_name
+        $class = Mapel::create([
+            'mapels_name' => $request->mapels_name
         ]);
 
         return $class;
@@ -62,9 +62,9 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $mapels = Mapel::findOrFail($id);
 
-        return $kelas;
+        return $mapels;
     }
 
     /**
@@ -77,19 +77,19 @@ class ClassController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'kelas_name'          => 'required',
+            'mapels_name'          => 'required',
         ]);
 
-        $kelas = Kelas::findOrFail($id);
+        $mapels = Mapel::findOrFail($id);
 
 
 
 
 
-        //update kelas
-        $kelas->update(['kelas_name' => $request->kelas_name]);
+        //update mapels
+        $mapels->update(['mapels_name' => $request->mapels_name]);
 
-        return $kelas;
+        return $mapels;
 
     }
 
@@ -101,11 +101,11 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $mapels = Mapel::findOrFail($id);
 
-        $kelas->delete();
+        $mapels->delete();
 
-        if($kelas){
+        if($mapels){
             return "sukses dihapus";
         }
     }
