@@ -3,7 +3,7 @@ import React from 'react';
 
 //import Link
 import { Link } from '@inertiajs/inertia-react';
-import Layout from "../../../Layouts/Default";
+import Layout from "../../Layouts/Default";
 
 export default function ClassIndex({ classes, session }) {
 
