@@ -83,7 +83,7 @@ class MapelController extends Controller
         $this->validate($request, [
             'tentor_email'      => 'required|email|unique:tentos',
             'tentor_password'   => 'required|confirmed',
-            'tentor_nama'   => 'required',,
+            'tentor_nama'   => 'required',
         ]);
 
         $tentor = Mapel::findOrFail($id);
