@@ -44,7 +44,7 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kelas_name'          => 'required',
+            'kelas_name'          => 'required|unique:kelas',
         ]);
 
         $class = Kelas::create([

@@ -44,7 +44,7 @@ class MapelController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'mapels_name'          => 'required',
+            'mapels_name'          => 'required|unique:mapels',
         ]);
 
         $class = Mapel::create([
