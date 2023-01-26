@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 Route::resource('/users', \App\Http\Controllers\UserController::class);
 
+Route::resource('/class', \App\Http\Controllers\ClassController::class);
+
+
+
 Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
 
 //prefix "apps"
