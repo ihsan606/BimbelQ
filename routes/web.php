@@ -50,5 +50,3 @@ Route::resource('/gaji', \App\Http\Controllers\MapelController::class);
 Route::resource('/program', \App\Http\Controllers\ProgramController::class);
 
 Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
-
-Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
