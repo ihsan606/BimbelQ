@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
+use App\Models\Tentor;
 use Illuminate\Http\Request;
 
-class ClassController extends Controller
+class MapelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,12 @@ class ClassController extends Controller
      */
     public function index()
     {
-       $classes = Kelas::when(request()->q, function($classes) {
-           $classes = $classes->where('kelas_name', 'like', '%'. request()->q . '%');
-       })->latest('id')->get();
+        $tentor = Tentor::when(request()->q, function($tentor) {
+            $tentor = $tentor->where('mapels_name', 'like', '%'. request()->q . '%');
+        })->latest('id')->get();
 
-        return inertia('Class/Index', [
-            'classes' => $classes
+        return inertia('Tentors/Index', [
+            'tentors' => $tentor
         ]);
 
 
@@ -44,11 +44,15 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kelas_name'          => 'required|unique:kelas',
+            'tentor_email'      => 'required|email|unique:tentos',
+            'tentor_password'   => 'required|confirmed',
+            'tentor_nama'   => 'required',
         ]);
 
-        $class = Kelas::create([
-            'kelas_name' => $request->kelas_name
+        $class = Mapel::create([
+            'tentor_email'      => $request->tentor_email,
+            'tentor_password'   => bcrypt($request->tentor_password),
+            'tentor_nama'   => $request->tentor_nama,
         ]);
 
         return $class;
@@ -62,9 +66,9 @@ class ClassController extends Controller
      */
     public function edit($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $tentor = Tentor::findOrFail($id);
 
-        return $kelas;
+        return $mapels;
     }
 
     /**
@@ -77,19 +81,25 @@ class ClassController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'kelas_name'          => 'required',
+            'tentor_email'      => 'required|email|unique:tentos',
+            'tentor_password'   => 'required|confirmed',
+            'tentor_nama'   => 'required',,
         ]);
 
-        $kelas = Kelas::findOrFail($id);
+        $tentor = Mapel::findOrFail($id);
 
 
 
 
 
-        //update kelas
-        $kelas->update(['kelas_name' => $request->kelas_name]);
+        //update tentor
+        $tentor->update([
+            'tentor_email'      => $request->tentor_email,
+            'tentor_password'   => bcrypt($request->tentor_password),
+            'tentor_nama'   => $request->tentor_nama,
+        ]);
 
-        return $kelas;
+        return $tentor;
 
     }
 
@@ -101,11 +111,11 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $tentor = Mentor::findOrFail($id);
 
-        $kelas->delete();
+        $tentor->delete();
 
-        if($kelas){
+        if($tentor){
             return "sukses dihapus";
         }
     }
