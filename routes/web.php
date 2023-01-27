@@ -36,17 +36,8 @@ Route::resource('/class', \App\Http\Controllers\ClassController::class);
 
 Route::resource('/mapels', \App\Http\Controllers\MapelController::class);
 
+Route::resource('/program', \App\Http\Controllers\ProgramController::class);
 
+Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
 
 Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
-
-//prefix "apps"
-Route::prefix('apps')->group(function() {
-    
-    //route resource programs
-    Route::resource('/program', \App\Http\Controllers\Apps\ProgramController::class);
-
-    //route resource sesis
-    Route::resource('/sesi', \App\Http\Controllers\Apps\SesiController::class);
-
-});

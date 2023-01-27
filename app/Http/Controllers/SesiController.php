@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Apps;
+namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Sesi;
@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class SesiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //get sesis
@@ -21,21 +18,26 @@ class SesiController extends Controller
         })->latest()->paginate(5);
 
         //return inertia
-        return Inertia::render('Apps/Sesis/Index', [
+        return Inertia::render('Sesis/Index', [
             'sesis' => $sesis,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return Inertia::render('Apps/Sesis/Create');
+        return Inertia::render('Sesis/Create');
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -43,34 +45,41 @@ class SesiController extends Controller
          * validate
          */
         $this->validate($request, [
-            'sesi_name'         => 'required|unique:sesis',
-            'sesi_mulai'        => 'required',
-            'sesi_berakhir'     => 'required'
+            'sesi_name'          => 'required|unique:sesis',
+            'sesi_mulai'   => 'required',
+            'sesi_berakhir'   => 'required',
         ]);
 
         //create sesi
         Sesi::create([
-            'sesi_name'         => $request->sesi_name,
-            'sesi_mulai'        => $request->sesi_mulai,
-            'sesi_berakhir'     => $request->sesi_berakhir
+            'sesi_name'          => $request->sesi_name,
+            'sesi_mulai'   => $request->sesi_mulai,
+            'sesi_berakhir'   => $request->sesi_berakhir,
         ]);
 
         //redirect
-        return redirect()->route('apps.sesis.index');
+        return redirect()->route('sesis.index');
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function edit(Sesi $sesi)
     {
-        return Inertia::render('Apps/Sesis/Edit', [
+        return Inertia::render('Sesis/Edit', [
             'sesi' => $sesi,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Sesi $sesi)
     {
@@ -78,24 +87,27 @@ class SesiController extends Controller
          * validate
          */
         $this->validate($request, [
-            'sesi_name'             => 'required|unique:sesis,sesi_name,'.$sesi->id,
-            'sesi_mulai'            => 'required',
-            'sesi_berakhir'         => 'required'
+            'sesi_name'          => 'required|unique:sesis,sesi_name,'.$sesi->id,
+            'sesi_mulai'   => 'required',
+            'sesi_berakhir'   => 'required',
         ]);
 
         //update sesi
         $sesi->update([
-            'sesi_name'             => $request->sesi_name,
-            'sesi_mulai'            => $request->sesi_mulai,
-            'sesi_berakhir'         => $request->sesi_berakhir
+            'sesi_name'          => $request->sesi_name,
+            'sesi_mulai'   => $request->sesi_mulai,
+            'sesi_berakhir'   => $request->sesi_berakhir,
         ]);
 
         //redirect
-        return redirect()->route('apps.sesis.index');
+        return redirect()->route('sesis.index');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -106,6 +118,6 @@ class SesiController extends Controller
         $sesi->delete();
 
         //redirect
-        return redirect()->route('apps.sesis.index');
+        return redirect()->route('sesis.index');
     }
 }
