@@ -38,5 +38,6 @@ Route::resource('/mapels', \App\Http\Controllers\MapelController::class);
 
 
 
-Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
+Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
+Route::get('/jadwalbimbingan/create', [\App\Http\Controllers\JadwalBimbinganController::class, 'store']);
 

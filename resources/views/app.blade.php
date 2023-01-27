@@ -10,7 +10,8 @@
     @vite('resources/css/app.css')
     <style>
       body {
-        background-color: lightgray
+        background-color: white;
+        min-height: 100vh;
       }
     </style>
   </head>

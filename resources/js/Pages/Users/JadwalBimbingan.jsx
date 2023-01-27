@@ -1,15 +1,19 @@
 import Layout from '../../Layouts/SideMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
 export default function JadwalBimbingan() {
     return (
         <Layout>
-            <header>
-                <button>sorting</button>
-                <button>Tambah Jadwal</button>
+            <header className='flex flex-row justify-between'>
+                <button className='btn btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg'>sorting</button>
+                <button className='btn btn-outline btn-xs sm:btn-sm md:btn-md lg:btn-lg'>
+                    <FontAwesomeIcon icon={faCirclePlus} className='mr-1' />
+                    Tambah Jadwal
+                </button>
             </header>
-            <div className="overflow-x-auto w-full">
+            <div className="overflow-x-auto w-full mt-3">
                 <table className="table w-full">
                     {/* head */}
                     <thead>
