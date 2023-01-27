@@ -8,7 +8,6 @@ import {Inertia} from "@inertiajs/inertia";
 import axios from "axios";
 import Sidebar from "../../Layouts/SideBar";
 import SidebarNew from "../../Layouts/SidebarNew";
-import SideMenu from "../../Layouts/SideMenu";
 
 export default function Home({  }) {
     //token
