@@ -1,25 +1,32 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDay, faListUl } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export default function SideMenu ({ children }) {
     return (
-        <section>
-            <nav>
-                <p>Owner</p>
-                <span></span>
-                <li>
-                    <FontAwesomeIcon icon={faCalendarDay} />
-                    <a href="">Jadwal Bimbingan</a>
-                </li>
-                <li>
-                    <a href="">Daftar Siswa</a>
-                </li>
-                <li>
-                    <a href="">Daftar Tentor</a>
-                </li>
+        <section className='grid grid-rows-1 h-screen' 
+            style={{ gridTemplateColumns: '1fr 3fr'}}> 
+            <nav 
+                className='flex flex-col justify-start align-center p-4'
+                sx={{ boxShadow: 1 }}
+            >
+                <Stack spacing={3}>
+                    <p>Owner</p>
+                    <span></span>
+                    <Button variant="text" href="#outlined-buttons">
+                        Jadwal Bimbingan
+                    </Button>
+                    <Button variant="text" href="#outlined-buttons">
+                        Siswa
+                    </Button>
+                    <Button variant="text" href="#outlined-buttons">
+                        Tentor
+                    </Button>
+                </Stack>
             </nav>
-            <main>
+            <main className='p-3'>
                 { children }
             </main>
         </section>
