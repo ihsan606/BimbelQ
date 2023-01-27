@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,11 +34,11 @@ class RegisterController extends Controller
         if($user) {
             return response()->json([
                 'success' => true,
-                'user'    => $user,  
+                'user'    => $user,
             ], 201);
         }
 
-        //return JSON process insert failed 
+        //return JSON process insert failed
         return response()->json([
             'success' => false,
         ], 409);
