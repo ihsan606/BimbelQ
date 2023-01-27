@@ -15,12 +15,18 @@ class SesiController extends Controller
         //get sesis
         $sesis = Sesi::when(request()->q, function($sesis) {
             $sesis = $sesis->where('sesi_name', 'like', '%'. request()->q . '%');
-        })->latest()->paginate(5);
+        })->get();
+
+        // $sesis = Sesi::when(request()->q, function($sesis) {
+        //     $sesis = $sesis->where('sesi_name', 'like', '%'. request()->q . '%');
+        // })->latest()->paginate(5);
 
         //return inertia
-        return Inertia::render('Sesis/Index', [
+        return Inertia::render('Sesi/Index', [
             'sesis' => $sesis,
         ]);
+
+        return $sesis;
     }
 
     /**
@@ -30,7 +36,7 @@ class SesiController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Sesis/Create');
+        // return Inertia::render('Sesis/Create');
     }
 
     /**
@@ -51,14 +57,17 @@ class SesiController extends Controller
         ]);
 
         //create sesi
-        Sesi::create([
+        $sesi = Sesi::create([
             'sesi_name'          => $request->sesi_name,
             'sesi_mulai'   => $request->sesi_mulai,
             'sesi_berakhir'   => $request->sesi_berakhir,
         ]);
 
         //redirect
-        return redirect()->route('sesis.index');
+        // return redirect()->route('sesis.index');
+
+        return $sesi;
+
     }
 
     /**
@@ -67,11 +76,16 @@ class SesiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sesi $sesi)
+    public function edit($id)
+    // public function edit(Sesi $sesi)
     {
-        return Inertia::render('Sesis/Edit', [
-            'sesi' => $sesi,
-        ]);
+        $sesi = Sesi::findOrFail($id);
+
+        // return Inertia::render('Sesis/Edit', [
+        //     'sesi' => $sesi,
+        // ]);
+
+        return $sesi;
     }
 
     /**
@@ -81,16 +95,24 @@ class SesiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sesi $sesi)
+    public function update(Request $request, $id)
     {
         /**
          * validate
          */
         $this->validate($request, [
-            'sesi_name'          => 'required|unique:sesis,sesi_name,'.$sesi->id,
+            'sesi_name'          => 'required',
             'sesi_mulai'   => 'required',
             'sesi_berakhir'   => 'required',
         ]);
+
+        $sesi = Sesi::findOrFail($id);
+
+        // $this->validate($request, [
+        //     'sesi_name'          => 'required|unique:sesis,sesi_name,'.$sesi->id,
+        //     'sesi_mulai'   => 'required',
+        //     'sesi_berakhir'   => 'required',
+        // ]);
 
         //update sesi
         $sesi->update([
@@ -100,7 +122,8 @@ class SesiController extends Controller
         ]);
 
         //redirect
-        return redirect()->route('sesis.index');
+        return $sesi;
+        // return redirect()->route('sesis.index');
     }
 
     /**
@@ -118,6 +141,10 @@ class SesiController extends Controller
         $sesi->delete();
 
         //redirect
-        return redirect()->route('sesis.index');
+        if($sesi){
+            return "sukses dihapus";
+        }
+
+        // return redirect()->route('sesis.index');
     }
 }

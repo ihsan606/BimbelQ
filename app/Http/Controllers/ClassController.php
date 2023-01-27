@@ -16,11 +16,13 @@ class ClassController extends Controller
     {
        $classes = Kelas::when(request()->q, function($classes) {
            $classes = $classes->where('kelas_name', 'like', '%'. request()->q . '%');
-       })->latest('id')->get();
+       })->get();
 
         return inertia('Class/Index', [
             'classes' => $classes
         ]);
+
+        // return $classes;
 
 
     }

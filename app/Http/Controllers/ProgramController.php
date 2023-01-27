@@ -16,12 +16,18 @@ class ProgramController extends Controller
         //get programs
         $programs = Program::when(request()->q, function($programs) {
             $programs = $programs->where('program_name', 'like', '%'. request()->q . '%');
-        })->latest()->paginate(5);
+        })->get();
+
+        // $programs = Program::when(request()->q, function($programs) {
+        //     $programs = $programs->where('program_name', 'like', '%'. request()->q . '%');
+        // })->latest()->paginate(5);
 
         //return inertia
-        return Inertia::render('Programs/Index', [
+        return Inertia::render('Program/Index', [
             'programs' => $programs,
         ]);
+
+        // return $programs;
     }
 
     /**
@@ -31,7 +37,7 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Programs/Create');
+        // return Inertia::render('Programs/Create');
     }
 
     /**
@@ -105,11 +111,9 @@ class ProgramController extends Controller
         // ]);
 
         //update program
-        $program->update(['program_name' => $request->program_name]);
-
-        // $program->update([
-        //     'program_name'          => $request->program_name,
-        // ]);
+        $program->update([
+            'program_name'          => $request->program_name,
+        ]);
 
         //redirect
         return $program;
