@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Mapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MapelController extends Controller
 {
@@ -32,7 +34,7 @@ class MapelController extends Controller
      */
     public function create()
     {
-
+        return inertia('Mapels/Create');
     }
 
     /**
@@ -43,15 +45,20 @@ class MapelController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'mapels_name'          => 'required|unique:mapels',
+        $validator = Validator::make($request->all(), [
+            'mapels_name'          => 'required|unique:mapels'
         ]);
 
-        $class = Mapel::create([
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $mapels = Mapel::create([
             'mapels_name' => $request->mapels_name
         ]);
 
-        return $class;
+        return $mapels;
     }
 
     /**
@@ -64,7 +71,9 @@ class MapelController extends Controller
     {
         $mapels = Mapel::findOrFail($id);
 
-        return $mapels;
+        return inertia('Mapels/Edit', [
+            'mapel' => $mapels,
+        ]);
     }
 
     /**
@@ -89,7 +98,8 @@ class MapelController extends Controller
         //update mapels
         $mapels->update(['mapels_name' => $request->mapels_name]);
 
-        return $mapels;
+        return redirect()->route('mapels.index')->with('success', 'Data Berhasil Diupdate!');
+
 
     }
 
@@ -106,7 +116,8 @@ class MapelController extends Controller
         $mapels->delete();
 
         if($mapels){
-            return "sukses dihapus";
+            return redirect()->route('mapels.index')->with('success', 'Data Berhasil Dihapus!');
+
         }
     }
 }

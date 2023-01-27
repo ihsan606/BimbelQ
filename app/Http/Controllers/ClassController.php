@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClassController extends Controller
 {
@@ -34,7 +35,7 @@ class ClassController extends Controller
      */
     public function create()
     {
-
+        return inertia('Class/Create');
     }
 
     /**
@@ -45,9 +46,14 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'kelas_name'          => 'required|unique:kelas',
+        $validator = Validator::make($request->all(), [
+            'kelas_name'          => 'required|unique:kelas'
         ]);
+
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $class = Kelas::create([
             'kelas_name' => $request->kelas_name
@@ -66,7 +72,11 @@ class ClassController extends Controller
     {
         $kelas = Kelas::findOrFail($id);
 
-        return $kelas;
+
+
+        return inertia('Class/Edit', [
+            'kelas' => $kelas,
+        ]);
     }
 
     /**
@@ -78,9 +88,16 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'kelas_name'          => 'required',
+
+
+        $validator = Validator::make($request->all(), [
+            'kelas_name'          => 'required'
         ]);
+
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $kelas = Kelas::findOrFail($id);
 
@@ -91,7 +108,7 @@ class ClassController extends Controller
         //update kelas
         $kelas->update(['kelas_name' => $request->kelas_name]);
 
-        return $kelas;
+        return redirect()->route('class.index')->with('success', 'Data Berhasil Diupdate!');
 
     }
 
@@ -108,7 +125,7 @@ class ClassController extends Controller
         $kelas->delete();
 
         if($kelas){
-            return "sukses dihapus";
+            return redirect()->route('class.index')->with('success', 'Data Berhasil Dihapus!');
         }
     }
 }

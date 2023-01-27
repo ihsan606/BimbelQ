@@ -20,21 +20,17 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        //set validation
-//        $validator = Validator::make($request->all(), [
-//            'email'     => 'required',
-//            'password'  => 'required'
-//        ]);
 
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'email'     => 'required',
             'password'  => 'required'
         ]);
 
         //if validation fails
-//        if ($validator->fails()) {
-//            return response()->json($validator->errors(), 422);
-//        }
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         //get credentials from request
         $credentials = $request->only('email', 'password');
@@ -45,6 +41,11 @@ class LoginController extends Controller
                 'success' => false,
                 'message' => 'Email atau Password Anda salah'
             ], 401);
+
+//            return inertia('Login/Index',[
+//                'success' => false,
+//                'message' => 'Email atau Password Anda salah'
+//            ]);
         }
 
         //if auth success
@@ -53,5 +54,13 @@ class LoginController extends Controller
             'user'    => auth()->user(),
             'token'   => $token
         ], 200);
+
+//        return inertia('Login/Index',[
+//            'success' => true,
+//            'user'    => auth()->user(),
+//            'token'   => $token
+//        ]);
+
+
     }
 }
