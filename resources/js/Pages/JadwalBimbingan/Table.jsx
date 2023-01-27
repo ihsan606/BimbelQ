@@ -27,6 +27,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
 
 
 function createData(siswa, sesi, program, mapel, tentor, tanggal) {
@@ -120,6 +122,12 @@ const headCells = [
     disablePadding: false,
     label: 'Tanggal',
   },
+  {
+    id: 'details',
+    numeric: false,
+    disablePadding: false,
+    label: 'Details',
+  }
 ];
 
 function EnhancedTableHead(props) {
@@ -355,6 +363,16 @@ export default function EnhancedTable() {
                       <TableCell align="left">{row.mapel}</TableCell>
                       <TableCell align="left">{row.tentor}</TableCell>
                       <TableCell align="left">{row.tanggal}</TableCell>
+                      <TableCell align="center">
+                        <Stack direction="row" spacing={1}>
+                          <IconButton aria-label="delete">
+                            <DeleteIcon />
+                          </IconButton>
+                          <IconButton aria-label="edit">
+                            <EditIcon />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
