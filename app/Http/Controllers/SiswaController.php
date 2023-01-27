@@ -34,7 +34,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Apps/Siswas/Create');
+        return Inertia::render('Siswas/Create');
     }
 
     /**
@@ -62,7 +62,7 @@ class SiswaController extends Controller
         ]);
 
         //redirect
-        return redirect()->route('apps.siswas.index');
+        return redirect()->route('siswas.index');
     }
 
     /**
