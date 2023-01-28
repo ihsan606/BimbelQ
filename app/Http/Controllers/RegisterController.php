@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function index(Request $request)
+    public function index(){
+        return inertia('Register/Index');
+    }
+
+    public function register(Request $request)
     {
         //set validation
         $validator = Validator::make($request->all(), [

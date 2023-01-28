@@ -22,11 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'index'])->name('register');
+Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'register'])->name('register');
 
 Route::post('/auth/login',[\App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
 Route::get('/login',[\App\Http\Controllers\LoginController::class,'index']);
+
+Route::get('/register',[\App\Http\Controllers\RegisterController::class,'index']);
 
 Route::get('/home',[\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
