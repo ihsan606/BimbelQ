@@ -62,29 +62,20 @@ export default function Login({ errors, user, token }) {
     }
 
     return (
-        <Layout>
-            <div className="row" style={{ marginTop: '100px' }}>
-                <div className=" w-full px-64">
-                    <div className="card border-0 rounded shadow-sm border-top-success">
-                        <div className="card-header">
-                            <span className="font-weight-bold">Login</span>
-                            {validation.message && (
-                                <div>
-                                    <p>{validation.message}</p>
-                                    <p>{token}</p>
-                                </div>
+        <div className='relative flex flex-col justify-center min-h-screen overflow-hidden '>
+                <div className='w-full p-6 m-auto bg-gray rounded-3xl lg:max-w-xl shadow-2xl'>
+                        <h1 className='text-5xl font-semibold text-center text-cyan-900'>
+                            Sign in
+                        </h1>
 
-                            )}
-
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={submitLogin}>
-
-                                <div className="mb-3">
-                                    <label className="form-label fw-bold">Email</label>
-                                    <input type="text" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Masukkan Email" />
-                                </div>
-                                {validation.email && (
+                        <form className='mt-6' onSubmit={submitLogin}>
+                            <div className='mb-2'>
+                                <label className='block text-sm font-semibold text-gray-800'>
+                                    Email
+                                </label>
+                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className='block w-full px-4 py-2 mt-2 text-white bg-cyan-900 border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40' name="" id="" />
+                            </div>
+                            {validation.email && (
                                     <div className="bg-white text-center py-1 lg:px-4">
                                     <div className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
                                     <span className="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-bold mr-3">Warning</span>
@@ -92,12 +83,12 @@ export default function Login({ errors, user, token }) {
                                     <svg className="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
                                     </div>
                                     </div>
-                                )}
-
-                                <div className="mb-3">
-                                    <label className="form-label fw-bold">Password</label>
-                                    <input type="text" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan Password"/>
-                                </div>
+                            )}
+                            <div className=''>
+                                <label htmlFor="" className='block text-sm font-semibold text-gray-800'>
+                                    Password
+                                    </label>
+                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className='block w-full px-4 py-2 mt-2 text-white bg-cyan-900 border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40' name="" id="" />
                                 {validation.password && (
                                     <div className="bg-white text-center py-1 lg:px-4">
                                         <div className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
@@ -107,16 +98,24 @@ export default function Login({ errors, user, token }) {
                                         </div>
                                     </div>
                                 )}
-
-                                <div>
-                                    <button type="submit" className="btn btn-md btn-success me-2"><i className="fa fa-save"></i> SAVE</button>
-                                    <button type="reset" className="btn btn-md btn-warning"><i className="fa fa-redo"></i> RESET</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                            </div>
+                            <a href="#" className='ext-xs text-emerald-600 hover:underline'>
+                                Forget Password?
+                            </a>
+                            <div className='mt-6'>
+                                <button className='w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-emerald-500 rounded-md hover:bg-emerald-900 focus:outline-none focus:bg-emerald-900-'>
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                        <p className='mt-8 text-xs font-light text-center text-gray-700'>
+                            {" "}
+                            dont have an account?{" "}
+                            <a href="#" className='font-medium text-emerald-600 hover:underline'>
+                            Sign up
+                            </a>
+                        </p>
                 </div>
-            </div>
-        </Layout>
-    )
+        </div>
+    );
 }
