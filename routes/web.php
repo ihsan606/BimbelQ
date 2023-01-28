@@ -44,6 +44,8 @@ Route::resource('/siswas', \App\Http\Controllers\MapelController::class);
 
 Route::resource('/tentors', \App\Http\Controllers\MapelController::class);
 
+Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
+
 Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
 Route::get('/jadwalbimbingan/create', [\App\Http\Controllers\JadwalBimbinganController::class, 'store']);
 
@@ -53,4 +55,4 @@ Route::resource('/program', \App\Http\Controllers\ProgramController::class);
 
 Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
 
-Route::get('/owner', [\App\Http\Controllers\OwnerController::class, 'index']);
+//Route::get('/owner', [\App\Http\Controllers\Ow::class, 'index']);
