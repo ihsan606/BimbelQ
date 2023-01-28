@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use App\Models\Sesi;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 
 class SesiController extends Controller
 {
@@ -15,18 +14,12 @@ class SesiController extends Controller
         //get sesis
         $sesis = Sesi::when(request()->q, function($sesis) {
             $sesis = $sesis->where('sesi_name', 'like', '%'. request()->q . '%');
-        })->get();
+        })->latest('id')->get();
 
-        // $sesis = Sesi::when(request()->q, function($sesis) {
-        //     $sesis = $sesis->where('sesi_name', 'like', '%'. request()->q . '%');
-        // })->latest()->paginate(5);
-
-        //return inertia
-        return Inertia::render('Sesi/Index', [
-            'sesis' => $sesis,
+        return inertia('Sesi/Index', [
+            'sesis' => $sesis
         ]);
 
-        return $sesis;
     }
 
     /**
@@ -36,7 +29,7 @@ class SesiController extends Controller
      */
     public function create()
     {
-        // return Inertia::render('Sesis/Create');
+        return inertia('Sesi/Create');
     }
 
     /**
@@ -47,14 +40,16 @@ class SesiController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * validate
-         */
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'sesi_name'          => 'required|unique:sesis',
             'sesi_mulai'   => 'required',
             'sesi_berakhir'   => 'required',
         ]);
+
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         //create sesi
         $sesi = Sesi::create([
@@ -81,11 +76,9 @@ class SesiController extends Controller
     {
         $sesi = Sesi::findOrFail($id);
 
-        // return Inertia::render('Sesis/Edit', [
-        //     'sesi' => $sesi,
-        // ]);
-
-        return $sesi;
+        return inertia('Sesi/Edit', [
+            'sesi' => $sesi,
+        ]);
     }
 
     /**
@@ -97,22 +90,18 @@ class SesiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /**
-         * validate
-         */
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'sesi_name'          => 'required',
             'sesi_mulai'   => 'required',
             'sesi_berakhir'   => 'required',
         ]);
 
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        
         $sesi = Sesi::findOrFail($id);
-
-        // $this->validate($request, [
-        //     'sesi_name'          => 'required|unique:sesis,sesi_name,'.$sesi->id,
-        //     'sesi_mulai'   => 'required',
-        //     'sesi_berakhir'   => 'required',
-        // ]);
 
         //update sesi
         $sesi->update([
@@ -121,9 +110,7 @@ class SesiController extends Controller
             'sesi_berakhir'   => $request->sesi_berakhir,
         ]);
 
-        //redirect
-        return $sesi;
-        // return redirect()->route('sesis.index');
+        return redirect()->route('sesi.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -142,9 +129,7 @@ class SesiController extends Controller
 
         //redirect
         if($sesi){
-            return "sukses dihapus";
+            return redirect()->route('sesi.index')->with('success', 'Data Berhasil Dihapus!');
         }
-
-        // return redirect()->route('sesis.index');
     }
 }
