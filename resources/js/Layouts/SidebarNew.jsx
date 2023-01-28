@@ -101,39 +101,19 @@ const SidebarNew = ({children}) => {
                                     </Link>
                                 </li>
 
+                                <li className={currentPath === "tarifs"?"flex w-full justify-between text-gray-300 cursor-pointer items-center mb-2 bg-gray-500 rounded-lg px-2 py-2":"flex w-full justify-between text-gray-300 cursor-pointer items-center mb-2 px-2 py-2 hover:bg-gray-500 hover:rounded-lg"}>
+                                    <Link href="/tarifs"  className="flex items-center focus:outline-none hover:text-white w-full focus:ring-2 focus:ring-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-grid" width="18" height="18" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                                            <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                                            <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                                            <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                                            <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                                        </svg>
+                                        <span className="text-sm ml-2">Tarif</span>
+                                    </Link>
+                                </li>
 
-                                <li className="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
-                                    <a  className="flex items-center focus:outline-none focus:ring-2 focus:ring-white" >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-code" width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z"></path>
-                                            <polyline points="7 8 3 12 7 16"></polyline>
-                                            <polyline points="17 8 21 12 17 16"></polyline>
-                                            <line x1="14" y1="4" x2="10" y2="20"></line>
-                                        </svg>
-                                        <span className="text-sm ml-2">Deliverables</span>
-                                    </a>
-                                </li>
-                                <li className="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
-                                    <a  className="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-puzzle" width="18" height="18" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z"></path>
-                                            <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1"></path>
-                                        </svg>
-                                        <span className="text-sm ml-2">Invoices</span>
-                                    </a>
-                                    <div className="py-1 px-3 bg-gray-600 rounded text-gray-300 flex items-center justify-center text-xs">25</div>
-                                </li>
-                                <li className="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center mb-6">
-                                    <a  className="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-stack" width="18" height="18" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" />
-                                            <polyline points="12 4 4 8 12 12 20 8 12 4" />
-                                            <polyline points="4 12 12 16 20 12" />
-                                            <polyline points="4 16 12 20 20 16" />
-                                        </svg>
-                                        <span className="text-sm ml-2">Inventory</span>
-                                    </a>
-                                </li>
                                 <button onClick={logoutHandler} className="flex w-full justify-between text-gray-400 hover:text-gray-300 cursor-pointer items-center">
                                     <a  className="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
