@@ -42,17 +42,15 @@ Route::resource('/mapels', \App\Http\Controllers\MapelController::class);
 
 Route::resource('/siswas', \App\Http\Controllers\MapelController::class);
 
-Route::resource('/tentors', \App\Http\Controllers\MapelController::class);
-
 Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
 
 Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
 Route::get('/jadwalbimbingan/create', [\App\Http\Controllers\JadwalBimbinganController::class, 'store']);
 
-Route::resource('/gaji', \App\Http\Controllers\MapelController::class);
-
 Route::resource('/program', \App\Http\Controllers\ProgramController::class);
 
 Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
+
+Route::resource('/tentor', \App\Http\Controllers\TentorController::class);
 
 //Route::get('/owner', [\App\Http\Controllers\Ow::class, 'index']);

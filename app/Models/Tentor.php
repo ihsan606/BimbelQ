@@ -22,8 +22,8 @@ class Tentor extends Model
         return $this->hasMany(gaji_tentor::class);
     }
 
-    public function tentor_x_mapel(){
-        return $this->hasMany(Tentor_x_mapel::class);
+    public function mapel(){
+        return $this->belongsTo(Mapel::class);
     }
 
 }
