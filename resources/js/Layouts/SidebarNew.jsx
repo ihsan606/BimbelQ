@@ -52,7 +52,7 @@ const SidebarNew = ({ children }) => {
                                 BimbelQ
                             </span>
                         </div>
-                        <ul className="mt-12">
+                        <ul className="mt-6">
                             <li
                                 className={
                                     currentPath === "home"
@@ -461,7 +461,7 @@ const SidebarNew = ({ children }) => {
                                 </a>
                             </button>
                         </ul>
-                        <div className="flex justify-center mt-48 mb-4 w-full">
+                        <div className="flex justify-center mt-24 mb-4 w-full">
                             <div className="relative">
                                 <div className="text-gray-300 absolute ml-4 inset-0 m-auto w-4 h-4">
                                     <svg
