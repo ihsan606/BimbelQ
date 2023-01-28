@@ -23,7 +23,7 @@ class Tentor extends Model
     }
 
     public function mapel(){
-        return $this->belongsTo(Mapel::class);
+        return $this->belongsTo(Mapel::class, 'mapels_id', 'id');
     }
 
 }

@@ -412,13 +412,13 @@ const SidebarNew = ({ children }) => {
                             </li>
                             <li
                                 className={
-                                    currentPath === "tentor"
+                                    currentPath === "tentors"
                                         ? "flex w-full justify-between text-gray-300 cursor-pointer items-center mb-2 bg-gray-500 rounded-lg px-2 py-2"
                                         : "flex w-full justify-between text-gray-300 cursor-pointer items-center mb-2 px-2 py-2 hover:bg-gray-500 hover:rounded-lg"
                                 }
                             >
                                 <Link
-                                    href="/tentor"
+                                    href="/tentors"
                                     className="flex items-center focus:outline-none hover:text-white w-full focus:ring-2 focus:ring-white"
                                 >
                                     <svg
