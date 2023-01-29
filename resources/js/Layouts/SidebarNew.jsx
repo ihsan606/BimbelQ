@@ -1,4 +1,4 @@
-`import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, useLocation } from "react-router-dom";
