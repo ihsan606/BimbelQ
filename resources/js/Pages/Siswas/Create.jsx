@@ -64,13 +64,13 @@ export default function CreateClass({ errors, session }) {
                                    className="block text-sm mb-1 font-semibold text-gray-500 dark:text-white">Nama Siswa</label>
                             <input type="text" id="siswa_name"
                                    onChange={(e) => setSiswaName(e.target.value)}
-                                   className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                    placeholder="Nama..."/>
                             <label htmlFor="siswa_email"
                                    className="block text-sm mb-1 mt-2 font-semibold text-gray-500 dark:text-white">Email Siswa</label>
                             <input type="text" id="siswa_email"
                                    onChange={(e) => setSiswaEmail(e.target.value)}
-                                   className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                    placeholder="Email..."/>
                             {validation.siswa_name && (
                                 <div className="bg-white text-center py-1 lg:px-4">
