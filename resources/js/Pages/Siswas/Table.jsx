@@ -29,6 +29,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
+import swal from "sweetalert";
+import {Inertia} from "@inertiajs/inertia";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -38,6 +40,18 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
+}
+
+const handleDelete = async (id)=>{
+  Inertia.delete(`/siswas/${id}`)
+
+  await swal({
+      title: "SUCCESS!",
+      text: "Data Siswa Berhasil Dihapus!",
+      icon: "success",
+      buttons: false
+
+  });
 }
 
 function getComparator(order, orderBy) {
@@ -312,10 +326,10 @@ export default function EnhancedTable({ siswas }) {
                       {/* <TableCell align="left">{row.siswa_password}</TableCell> */}
                       <TableCell align="center">
                         <Stack direction="row" spacing={1}>
-                          <IconButton aria-label="delete">
+                          <IconButton aria-label="delete" onClick={()=>handleDelete(row.id)}>
                             <DeleteIcon />
                           </IconButton>
-                          <IconButton aria-label="edit">
+                          <IconButton aria-label="edit" href={`/siswas/${row.id}/edit`}>
                             <EditIcon />
                           </IconButton>
                         </Stack>

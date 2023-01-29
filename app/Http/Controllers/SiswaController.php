@@ -54,14 +54,12 @@ class SiswaController extends Controller
          */
         $this->validate($request, [
             'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_password'   => 'required|confirmed',
             'siswa_nama'   => 'required',
         ]);
 
         //create siswa
         $siswa = Siswa::create([
             'siswa_email'      => $request->siswa_email,
-            'siswa_password'   => bcrypt($request->siswa_password),
             'siswa_name'   => $request->siswa_nama,
         ]);
 
@@ -78,9 +76,11 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
-        $siswas = Siswa::findOrFail($id);
+        $siswa = Siswa::findOrFail($id);
 
-        return $siswas;
+        return Inertia::render('Siswas/Index', [
+            'siswa' =>$siswa
+        ]);
     }
 
     /**
@@ -97,7 +97,6 @@ class SiswaController extends Controller
          */
         $this->validate($request, [
             'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_password'   => 'required|confirmed',
             'siswa_nama'   => 'required',
         ]);
 
@@ -106,7 +105,6 @@ class SiswaController extends Controller
         //update siswas
         $siswas->update([
             'siswa_email'      => $request->siswa_email,
-            'siswa_password'   => bcrypt($request->siswa_password),
             'siswa_nama'   => $request->siswa_nama,
         ]);
 
