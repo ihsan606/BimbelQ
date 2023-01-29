@@ -53,4 +53,4 @@ Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
 
 Route::resource('/tentors', \App\Http\Controllers\TentorController::class);
 
-//Route::get('/owner', [\App\Http\Controllers\Ow::class, 'index']);
+Route::resource('/siswaabsensis', \App\Http\Controllers\SiswaAbsensiController::class);
