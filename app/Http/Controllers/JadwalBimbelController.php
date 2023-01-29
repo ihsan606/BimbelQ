@@ -8,7 +8,9 @@ use App\Models\Program;
 use App\Models\Programs_x_kelas;
 use App\Models\Sesi;
 use App\Models\Siswa;
+use App\Models\siswa_absensi;
 use App\Models\Tentor;
+use App\Models\tentor_absensi;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -72,17 +74,17 @@ class JadwalBimbelController extends Controller
             ['sesis_id',"=",$request->sesis_id]
         ])->first();
 
-        $checkTentor = jadwal_bimbel::where([
-            ['tentor_id',"=",$request->tentor_id],
-            ['programs_x_kelas_id',"=",$request->programs_x_kelas_id]
-        ])->first();
-
-        if($checkTentor){
-            return response()->json([
-                'tentor_id' =>["mentor sudah mengajar di kelas/program lain pada sesi yang sama"],
-                'programs_x_kelas_id' => ["mentor sudah mengajar di kelas/program lain pada sesi yang sama"]
-            ], 422);
-        }
+//        $checkTentor = jadwal_bimbel::where([
+//            ['tentor_id',"=",$request->tentor_id],
+//            ['programs_x_kelas_id',"=",$request->programs_x_kelas_id]
+//        ])->first();
+//
+//        if($checkTentor){
+//            return response()->json([
+//                'tentor_id' =>["mentor sudah mengajar di kelas/program lain pada sesi yang sama"],
+//                'programs_x_kelas_id' => ["mentor sudah mengajar di kelas/program lain pada sesi yang sama"]
+//            ], 422);
+//        }
 
         if($checkSiswa){
             return response()->json([
@@ -120,12 +122,18 @@ class JadwalBimbelController extends Controller
         $programs = Program::all();
         $clases = Kelas::all();
 
+        $siswas = Siswa::all();
+        $sesis = Sesi::all();
+        $program_x_kelases = Programs_x_kelas::with('program','kelas')->get();
+        $tentors = Tentor::all();
 
 
-        return inertia('Tarifs/Edit', [
-            'tarif' => $tarif,
-            'programs' => $programs,
-            'clases' => $clases
+
+        return inertia('JadwalBimbel/Edit', [
+            'siswas' => $siswas,
+            'sesis' => $sesis,
+            'program_x_kelases' => $program_x_kelases,
+            'tentors' => $tentors
         ]);
     }
 
@@ -205,12 +213,30 @@ class JadwalBimbelController extends Controller
      */
     public function destroy($id)
     {
-        $tarif = Programs_x_kelas::findOrFail($id);
+        $jadwal = jadwal_bimbel::whereId($id)->first();
 
-        $tarif->delete();
+        if($jadwal){
+          $absens_siswa =  siswa_absensi::where('jadwal_bimbels_id',$jadwal->id)->get();
+          $absens_tentor =  tentor_absensi::where('jadwal_bimbels_id',$jadwal->id)->get();
+          if($absens_tentor){
+              foreach ($absens_tentor as $absen){
+                  $absen->delete();
+              }
+          }
 
-        if($tarif){
-            return redirect()->route('tarifs.index')->with('success', 'Data Berhasil Dihapus!');
+          if($absens_siswa){
+              foreach ($absens_siswa as $absen){
+                  $absen->delete();
+              }
+          }
+
+
+        }
+
+        $jadwal->delete();
+
+        if($jadwal){
+            return redirect()->route('jadwal-bimbels.index')->with('success', 'Data Berhasil Dihapus!');
         }
     }
 
