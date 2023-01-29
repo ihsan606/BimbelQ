@@ -9,16 +9,15 @@ export default function SideMenu ({ children }) {
         <section className='grid grid-rows-1 h-screen' 
             style={{ gridTemplateColumns: '1fr 3fr'}}> 
             <nav 
-                className='flex flex-col justify-start align-center p-4'
-                sx={{ boxShadow: 1 }}
+                className='flex flex-col justify-start align-center p-4 mt-16'
             >
                 <Stack spacing={3}>
-                    <p>Owner</p>
-                    <span></span>
-                    <Button variant="text" href="#outlined-buttons">
+                    {/* <p>Owner</p>
+                    <span></span> */}
+                    <Button variant="text" href="/jadwalbimbingan">
                         Jadwal Bimbingan
                     </Button>
-                    <Button variant="text" href="#outlined-buttons">
+                    <Button variant="text" href="/siswas">
                         Siswa
                     </Button>
                     <Button variant="text" href="#outlined-buttons">
