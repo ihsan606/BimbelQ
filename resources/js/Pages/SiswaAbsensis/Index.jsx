@@ -9,8 +9,8 @@ import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
 export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
-    const deleteClass = async (id) => {
-        Inertia.delete(`/tarifs/${id}`);
+    const deleteSiswaAbsensi = async (id) => {
+        Inertia.delete(`/siswa_s/${id}`);
 
         await swal({
             title: "SUCCESS!",

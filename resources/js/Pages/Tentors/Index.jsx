@@ -74,7 +74,13 @@ export default function TentorIndex({ tentors, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        MATA PELAJARAN YANG DIAJAR
+                                        MATA PELAJARAN
+                                    </th>
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
+                                        SESI
                                     </th>
 
                                     <th
@@ -99,6 +105,9 @@ export default function TentorIndex({ tentors, session }) {
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
                                             {tentor.mapel.mapels_name}
+                                        </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {tentor.sesi.sesi_name}
                                         </td>
 
                                         <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">

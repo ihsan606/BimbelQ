@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('tarif_belajar');
             $table->integer('tarif_tentor');
             $table->timestamps();
+            
             $table->foreign('programs_id')->references('id')->on('programs');
             $table->foreign('kelas_id')->references('id')->on('kelas');
         });

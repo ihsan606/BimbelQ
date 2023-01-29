@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tentor;
 use App\Models\Mapel;
+use App\Models\Sesi;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +18,7 @@ class TentorController extends Controller
      */
     public function index()
     {
-        $tentors = Tentor::with('mapel')->orderBy('mapels_id')->get();
+        $tentors = Tentor::with('mapel', 'sesi')->orderBy('mapels_id')->orderBy('sesi_id')->get();
 
         return inertia('Tentors/Index', [
             'tentors' => $tentors
@@ -36,9 +37,11 @@ class TentorController extends Controller
     public function create()
     {
         $mapels = Mapel::all();
+        $sesis = Sesi::all();
 
         return inertia('Tentors/Create',[
-            'mapels' => $mapels
+            'mapels' => $mapels,
+            'sesis' => $sesis
         ]);
     }
 
@@ -52,6 +55,7 @@ class TentorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mapels_id'          => 'required',
+            'sesi_id'          => 'required',
             'tentors_name'        => 'required',
             'tentors_email'        => 'required',
             'tentors_phone_number'        => 'required'
@@ -65,6 +69,7 @@ class TentorController extends Controller
 
         try {
             $mapels = Mapel::findOrFail($request->mapels_id);
+            $sesi = Sesi::findOrFail($request->sesi_id);
 
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' =>[$e->getMessage()]], 422);
@@ -73,6 +78,7 @@ class TentorController extends Controller
 
         $tentor = Tentor::create([
             'mapels_id'             => $request->mapels_id,
+            'sesi_id'             => $request->sesi_id,
             'tentors_name'        => $request->tentors_name,
             'tentors_email'        => $request->tentors_email,
             'tentors_phone_number'        => $request->tentors_phone_number
@@ -89,19 +95,19 @@ class TentorController extends Controller
      */
     public function edit($id)
     {
-        $tentor = Tentor::findOrFail($id)->with('mapel');
+        $tentor = Tentor::findOrFail($id)->with('mapel', 'sesi');
 
         if($tentor){
-            $tentor = Tentor::with('mapel')->whereId($id)->first();
+            $tentor = Tentor::with('mapel', 'sesi')->whereId($id)->first();
         }
 
         $mapels = Mapel::all();
-
-
+        $sesis = Sesi::all();
 
         return inertia('Tentors/Edit', [
             'tentor' => $tentor,
-            'mapels' => $mapels
+            'mapels' => $mapels,
+            'sesis' => $sesis
         ]);
     }
 
@@ -118,6 +124,7 @@ class TentorController extends Controller
 
         $validator = Validator::make($request->all(), [
             'mapels_id'          => 'required',
+            'sesi_id'          => 'required',
             'tentors_name'        => 'required',
             'tentors_email'        => 'required',
             'tentors_phone_number'        => 'required'
@@ -128,14 +135,12 @@ class TentorController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-
-
-
         $tentor = Tentor::whereId($id)->first();
 
         //update kelas
         $tentor->update([
             'mapels_id'          => $request->mapels_id,
+            'sesi_id'          => $request->sesi_id,
             'tentors_name'        => $request->tentors_name,
             'tentors_email'        => $request->tentors_email,
             'tentors_phone_number'        => $request->tentors_phone_number

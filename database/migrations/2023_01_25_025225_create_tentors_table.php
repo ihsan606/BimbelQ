@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('tentors_email');
             $table->string('tentors_phone_number');
             $table->unsignedBigInteger('mapels_id');
-
+            $table->unsignedBigInteger('sesi_id');
             // $table->timestamp('tentors_email_verified_at')->nullable();
             // $table->string('tentors_password');
             // $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('mapels_id')->references('id')->on('mapels');
+            $table->foreign('sesi_id')->references('id')->on('sesis');
+
 
         });
     }
