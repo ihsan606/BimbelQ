@@ -1,12 +1,7 @@
 //import React
 import React, {useEffect, useState} from 'react';
 
-//import Link
-import { Link } from '@inertiajs/inertia-react';
-import Layout from "../../Layouts/Default";
-import {Inertia} from "@inertiajs/inertia";
 import axios from "axios";
-import Sidebar from "../../Layouts/SideBar";
 import SidebarNew from "../../Layouts/SidebarNew";
 
 export default function Home({  }) {
@@ -94,8 +89,8 @@ export default function Home({  }) {
                                 </div>
                             </div>
                             <div className="flex-1 text-right">
-                                <h2 className="font-semibold text-sm uppercase text-gray-600">Penghasilan</h2>
-                                <p className="font-semibold text-xl">1,000,000 <span className="text-pink-500"><i
+                                <h2 className="font-normal text-sm uppercase text-gray-600">Penghasilan</h2>
+                                <p className="font-normal text-xl">1,000,000 <span className="text-pink-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>
@@ -114,8 +109,8 @@ export default function Home({  }) {
                                 </div>
                             </div>
                             <div className="flex-1 text-right">
-                                <h2 className="font-semibold text-sm uppercase text-gray-600">Siswa</h2>
-                                <p className="font-semibold text-xl">100 <span className="text-pink-500"><i
+                                <h2 className="font-normal text-sm uppercase text-gray-600">Siswa</h2>
+                                <p className="font-normal text-xl">100 <span className="text-pink-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>
@@ -142,8 +137,8 @@ export default function Home({  }) {
                                 </div>
                             </div>
                             <div className="flex-1 text-right ">
-                                <h2 className="font-semibold text-sm uppercase text-gray-600">Mentor</h2>
-                                <p className="font-semibold text-xl">12 <span className="text-blue-500"><i
+                                <h2 className="font-normal text-sm uppercase text-gray-600">Mentor</h2>
+                                <p className="font-normal text-xl">12 <span className="text-blue-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>
@@ -163,8 +158,8 @@ export default function Home({  }) {
                                 </div>
                             </div>
                             <div className="flex-1 text-right">
-                                <h2 className="font-semibold text-sm uppercase text-gray-600">GAJI Mentor</h2>
-                                <p className="font-semibold text-xl">500,000 <span className="text-pink-500"><i
+                                <h2 className="font-normal text-sm uppercase text-gray-600">GAJI Mentor</h2>
+                                <p className="font-normal text-xl">500,000 <span className="text-pink-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>
