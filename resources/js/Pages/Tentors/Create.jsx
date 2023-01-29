@@ -14,6 +14,8 @@ import { Inertia } from "@inertiajs/inertia";
 export default function CreateTentor({ errors, session, mapels }) {
     const [mapelsId, setMapelsId] = useState("");
     const [tentorsName, setTentorsName] = useState("");
+    const [tentorsEmail, setTentorsEmail] = useState("");
+    const [tentorsPhoneNumber, setTentorsPhoneNumber] = useState("");
     const [validation, setValidation] = useState([]);
     const [options, setOptions] = useState([""]);
 
@@ -44,6 +46,8 @@ export default function CreateTentor({ errors, session, mapels }) {
         //append data to formData
         formData.append("mapels_id", mapelsId);
         formData.append("tentors_name", tentorsName);
+        formData.append("tentors_email", tentorsEmail);
+        formData.append("tentors_phone_number", tentorsPhoneNumber);
 
         await axios
             .post("/tentors", formData)
@@ -74,8 +78,8 @@ export default function CreateTentor({ errors, session, mapels }) {
                     TAMBAH TENTOR
                 </div>
                 <form onSubmit={submitTentor}>
-                    <div className="grid grid-cols-4 gap-x-4 px-5">
-                        <div className="col-span-2 mt-2">
+                    <div className="grid grid-cols-4 gap-x-6 px-6">
+                        <div className="col-span-2 my-4">
                             <label
                                 htmlFor="nama_tentor"
                                 className="block text-sm mb-1 font-normal text-gray-500 dark:text-white"
@@ -112,7 +116,85 @@ export default function CreateTentor({ errors, session, mapels }) {
                                 </div>
                             )}
                         </div>
-                        <div className="col-span-2 mt-2">
+                        <div className="col-span-2 my-4">
+                            <label
+                                htmlFor="email_tentor"
+                                className="block text-sm mb-1 font-normal text-gray-500 dark:text-white"
+                            >
+                                Email Tentor
+                            </label>
+                            <input
+                                type="email"
+                                id="email_tentor"
+                                onChange={(e) =>
+                                    setTentorsEmail(e.target.value)
+                                }
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Email Tentor..."
+                            />
+                            {validation.tentors_email && (
+                                <div className="bg-white text-center py-1 lg:px-4">
+                                    <div
+                                        className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex"
+                                        role="alert"
+                                    >
+                                        <span className="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+                                            Warning
+                                        </span>
+                                        <span className="font-normal mr-2 text-left flex-auto">
+                                            {validation.tentors_email[0]}
+                                        </span>
+                                        <svg
+                                            className="fill-current opacity-75 h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="col-span-2 my-4">
+                            <label
+                                htmlFor="no_hp"
+                                className="block text-sm mb-1 font-normal text-gray-500 dark:text-white"
+                            >
+                                No. HP / No. Telp
+                            </label>
+                            <input
+                                type="number"
+                                id="no_hp"
+                                onChange={(e) =>
+                                    setTentorsPhoneNumber(e.target.value)
+                                }
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="No. HP / No. Telp..."
+                            />
+                            {validation.tentors_phone_number && (
+                                <div className="bg-white text-center py-1 lg:px-4">
+                                    <div
+                                        className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex"
+                                        role="alert"
+                                    >
+                                        <span className="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+                                            Warning
+                                        </span>
+                                        <span className="font-normal mr-2 text-left flex-auto">
+                                            {validation.tentors_phone_number[0]}
+                                        </span>
+                                        <svg
+                                            className="fill-current opacity-75 h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="col-span-2 my-2">
                             <label
                                 htmlFor="mapel"
                                 className="block text-sm mb-1 font-normal text-gray-500 dark:text-white"

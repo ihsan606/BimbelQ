@@ -52,7 +52,9 @@ class TentorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mapels_id'          => 'required',
-            'tentors_name'        => 'required'
+            'tentors_name'        => 'required',
+            'tentors_email'        => 'required',
+            'tentors_phone_number'        => 'required'
 
         ]);
 
@@ -71,7 +73,9 @@ class TentorController extends Controller
 
         $tentor = Tentor::create([
             'mapels_id'             => $request->mapels_id,
-            'tentors_name'        => $request->tentors_name
+            'tentors_name'        => $request->tentors_name,
+            'tentors_email'        => $request->tentors_email,
+            'tentors_phone_number'        => $request->tentors_phone_number
         ]);
 
         return $tentor;
@@ -114,7 +118,9 @@ class TentorController extends Controller
 
         $validator = Validator::make($request->all(), [
             'mapels_id'          => 'required',
-            'tentors_name'        => 'required'
+            'tentors_name'        => 'required',
+            'tentors_email'        => 'required',
+            'tentors_phone_number'        => 'required'
         ]);
 
         //if validation fails
@@ -130,7 +136,9 @@ class TentorController extends Controller
         //update kelas
         $tentor->update([
             'mapels_id'          => $request->mapels_id,
-            'tentors_name'        => $request->tentors_name
+            'tentors_name'        => $request->tentors_name,
+            'tentors_email'        => $request->tentors_email,
+            'tentors_phone_number'        => $request->tentors_phone_number
         ]);
 
         return redirect()->route('tentors.index')->with('success', 'Data Berhasil Diupdate!');
