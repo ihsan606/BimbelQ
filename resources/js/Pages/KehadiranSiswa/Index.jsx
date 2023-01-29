@@ -8,28 +8,28 @@ import SidebarNew from "../../Layouts/SidebarNew";
 import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
-export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
-    const deleteSiswaAbsensi = async (id) => {
-        Inertia.delete(`/siswa_s/${id}`);
+export default function KehadiranSiswaIndex({ kehadirans, session }) {
+    const deleteKehadiran = async (id) => {
+        Inertia.delete(`/kehadiransiswa/${id}`);
 
         await swal({
             title: "SUCCESS!",
-            text: "Data Kelas Berhasil Dihapus!",
+            text: "Data Kehadiran Siswa Berhasil Dihapus!",
             icon: "success",
             buttons: false,
         });
     };
 
-    const formatPrice = (value) => {
-        let val = (value / 1).toFixed(0).replace(".", ",");
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    };
+    // const formatPrice = (value)=>{
+    //     let val = (value/1).toFixed(0).replace('.', ',')
+    //     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    // }
 
     return (
         <SidebarNew>
             <div>
                 <Link
-                    href="/tarifs/create"
+                    href="/kehadiransiswa/create"
                     className="btn text-white gap-x-2 shadow-lg btn-success btn-md ml-8"
                 >
                     <svg
@@ -44,7 +44,7 @@ export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
                             fill="white"
                         />
                     </svg>
-                    TAMBAH TARIF
+                    TAMBAH KEHADIRAN
                 </Link>
 
                 <div className=" border-0 rounded shadow-sm">
@@ -52,6 +52,12 @@ export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
                         <table className="table table-auto bg-white shadow-lg rounded-lg">
                             <thead className="bg-[#E1F4FF]">
                                 <tr>
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
+                                        NAMA SISWA
+                                    </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
@@ -68,13 +74,13 @@ export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        TARIF BELAJAR
+                                        SESI
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        TARIF MENTOR
+                                        STATUS
                                     </th>
 
                                     <th
@@ -86,24 +92,30 @@ export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tarifs.map((tarif, index) => (
+                                {kehadirans.map((kehadiran, index) => (
                                     <tr className={"bg-white"} key={index}>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tarif.program.program_name}
+                                            {kehadiran.siswa.siswa_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tarif.kelas.kelas_name}
+                                            {kehadiran.sesi.sesi_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            Rp{formatPrice(tarif.tarif_belajar)}
+                                            {
+                                                kehadiran.programs_x_kelas
+                                                    .program.program_name
+                                            }
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            Rp{formatPrice(tarif.tarif_tentor)}
+                                            {
+                                                kehadiran.programs_x_kelas.kelas
+                                                    .kelas_name
+                                            }
                                         </td>
 
                                         <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
                                             <Link
-                                                href={`/tarifs/${tarif.id}/edit`}
+                                                href={`/kehadiransiswa/${kehadiran.id}/edit`}
                                             >
                                                 <svg
                                                     width="32"
@@ -130,7 +142,9 @@ export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
                                             </Link>
                                             <button
                                                 onClick={() =>
-                                                    deleteClass(tarif.id)
+                                                    deleteKehadiran(
+                                                        kehadiran.id
+                                                    )
                                                 }
                                             >
                                                 <svg

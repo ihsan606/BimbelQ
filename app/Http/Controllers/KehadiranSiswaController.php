@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SiswaAbsensiController extends Controller
+class KehadiranSiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +18,13 @@ class SiswaAbsensiController extends Controller
      */
     public function index()
     {
-        $siswa_absensis = siswa_absensi::with('siswa','jadwal_bimbel')->orderBy('siswas_id')->orderBy('jadwal_bimbels_id')->get();
+        $kehadirans = jadwal_bimbel::with('siswa','sesi', 'programs_x_kelas.program', 'programs_x_kelas.kelas')->orderBy('siswas_id')->orderBy('sesis_id')->get();
 
-        return inertia('SiswaAbsensis/Index', [
-            'siswa_absensis' => $siswa_absensis
+        return inertia('KehadiranSiswa/Index', [
+            'kehadirans' => $kehadirans
         ]);
 
-//        return $programs_x_kelas;
+    //    return $kehadirans;
 
 
     }
@@ -39,7 +39,7 @@ class SiswaAbsensiController extends Controller
         $siswas = Siswa::all();
         $jadwal_bimbels = jadwal_bimbel::all();
 
-        return inertia('SiswaAbsensis/Create',[
+        return inertia('KehadiranSiswa/Create',[
             'siswas' => $siswas,
             'jadwal_bimbels' => $jadwal_bimbels
         ]);
@@ -89,13 +89,13 @@ class SiswaAbsensiController extends Controller
 
 
 
-        $siswa_absensi = siswa_absensi::create([
+        $kehadiran = siswa_absensi::create([
             'siswas_id'          => $request->siswa_id,
             'jadwal_bimbels_id'             => $request->jadwal_bimbel_id,
             'absensi_status'        => $request->absensi_status
         ]);
 
-        return $siswa_absensi;
+        return $kehadiran;
     }
 
     /**
@@ -106,10 +106,10 @@ class SiswaAbsensiController extends Controller
      */
     public function edit($id)
     {
-        $siswa_absensi = siswa_absensi::findOrFail($id)->with('siswa','jadwal_bimbel');
+        $kehadiran = siswa_absensi::findOrFail($id)->with('siswa','jadwal_bimbel');
 
-        if($siswa_absensi){
-            $siswa_absensi = siswa_absensi::with('siswa','jadwal_bimbel')->whereId($id)->first();
+        if($kehadiran){
+            $kehadiran = siswa_absensi::with('siswa','jadwal_bimbel')->whereId($id)->first();
         }
 
         $siswas = Siswa::all();
@@ -117,8 +117,8 @@ class SiswaAbsensiController extends Controller
 
 
 
-        return inertia('SiswaAbsensis/Edit', [
-            'siswa_absensi' => $siswa_absensi,
+        return inertia('KehadiranSiswa/Edit', [
+            'kehadiran' => $kehadiran,
             'siswas' => $siswas,
             'jadwal_bimbels' => $jadwal_bimbels
         ]);
@@ -149,7 +149,7 @@ class SiswaAbsensiController extends Controller
 
 
 
-        $siswa_absensi = siswa_absensi::whereId($id)->first();
+        $kehadiran = siswa_absensi::whereId($id)->first();
 
         $checkSiswaJadwal = siswa_absensi::where([
             ['siswas_id',"=",$request->siswa_id],
@@ -165,7 +165,7 @@ class SiswaAbsensiController extends Controller
                     'absensi_status'        => $request->absensi_status
                 ]);
 
-                return redirect()->route('siswaabsensis.index')->with('success', 'Data Berhasil Diupdate!');
+                return redirect()->route('kehadiransiswa.index')->with('success', 'Data Berhasil Diupdate!');
             }else{
                 return response()->json([
                     'siswa_id' =>["duplicate combination siswa and jadwal"],
@@ -180,13 +180,13 @@ class SiswaAbsensiController extends Controller
 
 
         //update kelas
-        $siswa_absensi->update([
+        $kehadiran->update([
             'siswas_id'          => $request->siswa_id,
             'jadwal_bimbels_id'             => $request->jadwal_bimbels_id,
             'absensi_status'        => $request->absensi_status
         ]);
 
-        return redirect()->route('siswaabsensis.index')->with('success', 'Data Berhasil Diupdate!');
+        return redirect()->route('kehadiransiswa.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -197,12 +197,12 @@ class SiswaAbsensiController extends Controller
      */
     public function destroy($id)
     {
-        $siswa_absensi = siswa_absensi::findOrFail($id);
+        $kehadiran = siswa_absensi::findOrFail($id);
 
-        $siswa_absensi->delete();
+        $kehadiran->delete();
 
-        if($siswa_absensi){
-            return redirect()->route('siswaabsensis.index')->with('success', 'Data Berhasil Dihapus!');
+        if($kehadiran){
+            return redirect()->route('kehadiransiswa.index')->with('success', 'Data Berhasil Dihapus!');
         }
     }
 }

@@ -15,7 +15,7 @@ class jadwal_bimbel extends Model
     }
 
     public function sesi(){
-        return $this->belongsTo(Sesi::class);
+        return $this->belongsTo(Sesi::class, 'sesis_id', 'id');
     }
 
     public function programs_x_kelas(){

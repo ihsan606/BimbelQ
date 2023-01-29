@@ -56,4 +56,4 @@ Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
 
 Route::resource('/tentors', \App\Http\Controllers\TentorController::class);
 
-Route::resource('/siswaabsensis', \App\Http\Controllers\SiswaAbsensiController::class);
+Route::resource('/kehadiransiswa', \App\Http\Controllers\KehadiranSiswaController::class);

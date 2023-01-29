@@ -67,7 +67,7 @@ export default function CreateSesi({ errors, session }) {
                                 type="text"
                                 id="first_name"
                                 onChange={(e) => setSesiName(e.target.value)}
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Nama Sesi..."
                             />
                             {validation.sesi_name && (
@@ -104,7 +104,7 @@ export default function CreateSesi({ errors, session }) {
                                 type="time"
                                 id="sesi_mulai"
                                 onChange={(e) => setSesiMulai(e.target.value)}
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Sesi Mulai..."
                             />
                             {validation.sesi_mulai && (
@@ -143,7 +143,7 @@ export default function CreateSesi({ errors, session }) {
                                 onChange={(e) =>
                                     setSesiBerakhir(e.target.value)
                                 }
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Sesi Berakhir..."
                             />
                             {validation.sesi_berakhir && (

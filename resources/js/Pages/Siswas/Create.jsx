@@ -65,10 +65,10 @@ export default function CreateTentor({ errors, session }) {
                                 Nama Siswa
                             </label>
                             <input
-                                type="text" 
+                                type="text"
                                 id="nama_siswa"
                                 onChange={(e) => setSiswaName(e.target.value)}
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Nama Siswa..."
                             />
                             {validation.siswa_name && (
@@ -105,7 +105,7 @@ export default function CreateTentor({ errors, session }) {
                                 type="email"
                                 id="email_siswa"
                                 onChange={(e) => setSiswaEmail(e.target.value)}
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Email Siswa..."
                             />
                             {validation.siswa_email && (
@@ -144,7 +144,7 @@ export default function CreateTentor({ errors, session }) {
                                 onChange={(e) =>
                                     setSiswaPhoneNumber(e.target.value)
                                 }
-                                className="bg-gray-50 dark:bg-gray-50 text-white border border-gray-300 dark:border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="No. HP / No. Telp..."
                             />
                             {validation.siswa_phone_number && (

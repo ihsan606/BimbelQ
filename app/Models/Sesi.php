@@ -11,7 +11,7 @@ class Sesi extends Model
     protected $guarded = ['id'];
 
     public function jadwal_bimbels(){
-        return $this->hasMany(jadwal_bimbel::class, 'sesis_id','id');
+        return $this->hasMany(jadwal_bimbel::class);
     }
 
     public function tentors(){
