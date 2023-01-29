@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Apps;
+namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Siswa;
@@ -22,9 +22,13 @@ class SiswaController extends Controller
         })->latest()->paginate(5);
 
         //return inertia
-        return inertia('Siswas/Index', [
+        // return inertia('Siswas/Index', [
+        //     'siswas' =>$siswas
+        // ]);
+        return Inertia::render('Siswas/Index', [
             'siswas' =>$siswas
         ]);
+        //return $siswas;
     }
 
     /**
@@ -55,14 +59,15 @@ class SiswaController extends Controller
         ]);
 
         //create siswa
-        Siswa::create([
+        $siswa = Siswa::create([
             'siswa_email'      => $request->siswa_email,
             'siswa_password'   => bcrypt($request->siswa_password),
-            'siswa_nama'   => $request->siswa_nama,
+            'siswa_name'   => $request->siswa_nama,
         ]);
 
         //redirect
         return redirect()->route('siswas.index');
+        // return $siswa;
     }
 
     /**

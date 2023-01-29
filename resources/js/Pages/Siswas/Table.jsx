@@ -30,29 +30,6 @@ import '@fontsource/roboto/700.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Stack from '@mui/material/Stack';
 
-
-function createData(siswa, sesi, program, mapel, tentor, tanggal) {
-  return {
-    siswa,
-    sesi,
-    program,
-    mapel,
-    tentor,
-    tanggal
-  };
-}
-
-const rows = [
-  createData('Lee Haechan', 1, 'Privat', 'Matematika', 'Jung Jaehyun', '12 Januari 2023'),
-  createData('Lee Mark', 1, 'Reguler', 'Bahasa Indonesia', 'Krystal', '2 Januari 2023'),
-  createData('Lucas', 1, 'Privat', 'Matematika', 'Kai', '1 Januari 2023'),
-  createData('Kim Jungwoo', 1, 'Reguler', 'Bahasa Indonesia', 'Jung Jaehyun', '5 Januari 2023'),
-  createData('Kyuhyun', 1, 'Reguler', 'Bahasa Indonesia', 'Jung Somin', '4 Januari 2023'),
-  createData('Oh Sehun', 1, 'Reguler', 'IPA', 'Hwang Minhyun', '8 Januari 2023'),
-  createData('Doh Kyungsoo', 1, 'Privat', 'Matematika', 'Jung Jaehyun', '14 Januari 2023'),
-  createData('Park Chanyeol', 1, 'Privat', 'IPA', 'Lay Zhang', '6 Januari 2023'),
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -69,10 +46,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -87,40 +60,16 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'siswa',
+    id: 'siswa_name',
     numeric: false,
     disablePadding: true,
-    label: 'Siswa',
+    label: 'Nama',
   },
   {
-    id: 'sesi',
-    numeric: true,
-    disablePadding: false,
-    label: 'Sesi',
-  },
-  {
-    id: 'program',
+    id: 'siswa_email',
     numeric: false,
     disablePadding: false,
-    label: 'Program',
-  },
-  {
-    id: 'mapel',
-    numeric: false,
-    disablePadding: false,
-    label: 'Mapel',
-  },
-  {
-    id: 'tentor',
-    numeric: false,
-    disablePadding: false,
-    label: 'Tentor',
-  },
-  {
-    id: 'tanggal',
-    numeric: false,
-    disablePadding: false,
-    label: 'Tanggal',
+    label: 'Email',
   },
   {
     id: 'details',
@@ -215,7 +164,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Jadwal Bimbingan Belajar
+          Siswa
         </Typography>
       )}
 
@@ -233,8 +182,8 @@ function EnhancedTableToolbar(props) {
         </Tooltip>
       )}
 
-      <Button size='small' variant="contained" startIcon={<AddCircleOutlineIcon />}>
-        Tambah Jadwal
+      <Button size='small' variant="contained" startIcon={<AddCircleOutlineIcon />} href="siswas/create">
+        Tambah Siswa
       </Button>
     </Toolbar>
   );
@@ -244,13 +193,14 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ siswas }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const rows = siswas.data;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -260,7 +210,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.siswa_name);
       setSelected(newSelected);
       return;
     }
@@ -328,17 +278,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.siswa_name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.siswa_name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.index}
+                      key={index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -356,13 +306,10 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.siswa}
+                        {row.siswa_name}
                       </TableCell>
-                      <TableCell align="right">{row.sesi}</TableCell>
-                      <TableCell align="left">{row.program}</TableCell>
-                      <TableCell align="left">{row.mapel}</TableCell>
-                      <TableCell align="left">{row.tentor}</TableCell>
-                      <TableCell align="left">{row.tanggal}</TableCell>
+                      <TableCell align="left">{row.siswa_email}</TableCell>
+                      {/* <TableCell align="left">{row.siswa_password}</TableCell> */}
                       <TableCell align="center">
                         <Stack direction="row" spacing={1}>
                           <IconButton aria-label="delete">
