@@ -8,23 +8,28 @@ import SidebarNew from "../../Layouts/SidebarNew";
 import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
-export default function ProgramIndex({ programs, session }) {
-    const deleteProgram = async (id) => {
-        Inertia.delete(`/program/${id}`);
+export default function TentorIndex({ tentors, session }) {
+    const deleteTentor = async (id) => {
+        Inertia.delete(`/tentors/${id}`);
 
         await swal({
             title: "SUCCESS!",
-            text: "Data Program Berhasil Dihapus!",
+            text: "Data Tentor Berhasil Dihapus!",
             icon: "success",
             buttons: false,
         });
     };
 
+    // const formatPrice = (value)=>{
+    //     let val = (value/1).toFixed(0).replace('.', ',')
+    //     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    // }
+
     return (
         <SidebarNew>
             <div>
                 <Link
-                    href="/program/create"
+                    href="/tentors/create"
                     className="btn text-white gap-x-2 shadow-lg btn-success btn-md ml-8"
                 >
                     <svg
@@ -39,7 +44,7 @@ export default function ProgramIndex({ programs, session }) {
                             fill="white"
                         />
                     </svg>
-                    TAMBAH PROGRAM
+                    TAMBAH TENTOR
                 </Link>
 
                 <div className=" border-0 rounded shadow-sm">
@@ -48,13 +53,20 @@ export default function ProgramIndex({ programs, session }) {
                             <thead className="bg-[#E1F4FF]">
                                 <tr>
                                     <th
-                                        className="bg-[#E1F4FF] text-[#1597E5]"
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        NAME
+                                        NAMA TENTOR
                                     </th>
                                     <th
-                                        className="bg-[#E1F4FF] text-[#1597E5] w-28 text-center"
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
+                                        MATA PELAJARAN YANG DIAJAR
+                                    </th>
+
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] w-28 text-center font-medium"
                                         scope="col"
                                     >
                                         ACTIONS
@@ -62,14 +74,18 @@ export default function ProgramIndex({ programs, session }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {programs.map((program, index) => (
+                                {tentors.map((tentor, index) => (
                                     <tr className={"bg-white"} key={index}>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {program.program_name}
+                                            {tentor.tentors_name}
                                         </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {tentor.mapel.mapels_name}
+                                        </td>
+
                                         <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
                                             <Link
-                                                href={`/program/${program.id}/edit`}
+                                                href={`/tentors/${tentor.id}/edit`}
                                             >
                                                 <svg
                                                     width="32"
@@ -96,7 +112,7 @@ export default function ProgramIndex({ programs, session }) {
                                             </Link>
                                             <button
                                                 onClick={() =>
-                                                    deleteProgram(program.id)
+                                                    deleteTentor(tentor.id)
                                                 }
                                             >
                                                 <svg

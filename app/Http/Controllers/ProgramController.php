@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use App\Models\Program;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProgramController extends Controller
 {
@@ -16,15 +14,10 @@ class ProgramController extends Controller
         //get programs
         $programs = Program::when(request()->q, function($programs) {
             $programs = $programs->where('program_name', 'like', '%'. request()->q . '%');
-        })->get();
+        })->latest('id')->get();
 
-        // $programs = Program::when(request()->q, function($programs) {
-        //     $programs = $programs->where('program_name', 'like', '%'. request()->q . '%');
-        // })->latest()->paginate(5);
-
-        //return inertia
-        return Inertia::render('Program/Index', [
-            'programs' => $programs,
+        return inertia('Program/Index', [
+            'programs' => $programs
         ]);
 
         // return $programs;
@@ -37,7 +30,7 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        // return Inertia::render('Programs/Create');
+        return inertia('Program/Create');
     }
 
     /**
@@ -48,23 +41,19 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * validate
-         */
-        $this->validate($request, [
-            'program_name'          => 'required|unique:programs',
+        $validator = Validator::make($request->all(), [
+            'program_name'          => 'required|unique:programs'
         ]);
 
-        //create program
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $program = Program::create([
             'program_name'          => $request->program_name,
         ]);
 
-        // Program::create([
-        //     'program_name'          => $request->program_name,
-        // ]);
-
-        //redirect
         return $program;
         // return redirect()->route('programs.index');
     }
@@ -80,11 +69,9 @@ class ProgramController extends Controller
     {
         $program = Program::findOrFail($id);
 
-        // return Inertia::render('Programs/Edit', [
-        //     'program' => $program,
-        // ]);
-
-        return $program;
+        return inertia('Program/Edit', [
+            'program' => $program,
+        ]);
     }
 
     /**
@@ -96,28 +83,23 @@ class ProgramController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /**
-         * validate
-         */
-        $this->validate($request, [
-            'program_name'          => 'required',
+        $validator = Validator::make($request->all(), [
+            'program_name'          => 'required'
         ]);
 
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $program = Program::findOrFail($id);
-
-
-        // $this->validate($request, [
-        //     'program_name'          => 'required|unique:programs,program_name,'.$program->id,
-        // ]);
 
         //update program
         $program->update([
             'program_name'          => $request->program_name,
         ]);
 
-        //redirect
-        return $program;
-        // return redirect()->route('programs.index');
+        return redirect()->route('program.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -136,9 +118,8 @@ class ProgramController extends Controller
 
         //redirect
         if($program){
-            return "sukses dihapus";
+            return redirect()->route('program.index')->with('success', 'Data Berhasil Dihapus!');
         }
 
-        // return redirect()->route('programs.index');
     }
 }

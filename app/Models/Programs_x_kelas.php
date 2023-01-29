@@ -11,7 +11,7 @@ class Programs_x_kelas extends Model
     protected $guarded = ['id'];
 
     public function program(){
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'programs_id','id');
     }
 
     public function kelas(){

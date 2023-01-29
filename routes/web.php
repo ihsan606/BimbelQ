@@ -22,11 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'index'])->name('register');
+Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'register'])->name('register');
 
 Route::post('/auth/login',[\App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
 Route::get('/login',[\App\Http\Controllers\LoginController::class,'index']);
+
+Route::get('/register',[\App\Http\Controllers\RegisterController::class,'index']);
 
 Route::get('/home',[\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -40,13 +42,15 @@ Route::resource('/mapels', \App\Http\Controllers\MapelController::class);
 
 Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
 
-Route::resource('/tentors', \App\Http\Controllers\MentorController::class);
+Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
 
 Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
 Route::get('/jadwalbimbingan/create', [\App\Http\Controllers\JadwalBimbinganController::class, 'store']);
 
-Route::resource('/gaji', \App\Http\Controllers\MapelController::class);
-
 Route::resource('/program', \App\Http\Controllers\ProgramController::class);
 
 Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
+
+Route::resource('/tentors', \App\Http\Controllers\TentorController::class);
+
+//Route::get('/owner', [\App\Http\Controllers\Ow::class, 'index']);
