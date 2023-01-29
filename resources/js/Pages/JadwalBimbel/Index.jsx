@@ -1,11 +1,11 @@
 //import React
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 
 //import Link
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import SidebarNew from "../../Layouts/SidebarNew";
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
 export default function JadwalIndex({ jadwal_bimbels, session }) {
@@ -17,8 +17,7 @@ export default function JadwalIndex({ jadwal_bimbels, session }) {
             title: "SUCCESS!",
             text: "Data Kelas Berhasil Dihapus!",
             icon: "success",
-            buttons: false
-
+            buttons: false,
         });
     }
 
@@ -49,8 +48,6 @@ export default function JadwalIndex({ jadwal_bimbels, session }) {
                     TAMBAH JADWAL BIMBEL
                 </Link>
 
-
-
                 <div className=" border-0 rounded shadow-sm">
                     <div className="card-body">
                         <table className="table table-auto bg-white shadow-lg rounded-lg">
@@ -64,9 +61,7 @@ export default function JadwalIndex({ jadwal_bimbels, session }) {
                             </tr>
                             </thead>
                             <tbody>
-
-                            {
-                                jadwal_bimbels.map((sesi, index) =>(
+                                {jadwal_bimbels.map((sesi, index) => (
                                     <>
                                         {sesi.tentors.length>1 && (
                                             <>
@@ -412,20 +407,44 @@ export default function JadwalIndex({ jadwal_bimbels, session }) {
 
                                                                     ))
                                                                 }
-
-                                                            </>
-
-
-                                                        )
-                                                    }
-
-                                                </>
-
-                                            )
-                                        }
-
-
-
+                                                            </td>
+                                                        </tr>
+                                                        {sesi.tentors[0].jadwal_bimbels.map(
+                                                            (siswa, d) => (
+                                                                <>
+                                                                    {siswa.siswa
+                                                                        .id !==
+                                                                        sesi
+                                                                            .tentors[0]
+                                                                            .jadwal_bimbels[0]
+                                                                            .siswa
+                                                                            .id && (
+                                                                        <tr>
+                                                                            <td>
+                                                                                {
+                                                                                    siswa
+                                                                                        .siswa
+                                                                                        .siswa_name
+                                                                                }{" "}
+                                                                            </td>
+                                                                            <td className="text-center grid grid-cols-2">
+                                                                                edit{" "}
+                                                                                {
+                                                                                    sesi
+                                                                                        .tentors[0]
+                                                                                        .jadwal_bimbels
+                                                                                        .length
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    )}
+                                                                </>
+                                                            )
+                                                        )}
+                                                    </>
+                                                )}
+                                            </>
+                                        )}
                                     </>
                                 ))
                             }
@@ -436,5 +455,5 @@ export default function JadwalIndex({ jadwal_bimbels, session }) {
                 </div>
             </div>
         </SidebarNew>
-    )
+    );
 }

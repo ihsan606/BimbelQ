@@ -1,5 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { Inertia } from "@inertiajs/inertia";
+import { usePage } from "@inertiajs/inertia-react";
+
+
+
 export default function Registration() {
+
+    const {error} = usePage().props;
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [password_confirmation, setPassword_confirmation] = useState('');
+
+    const storeRegister = async(e) => {
+        e.preventDefault();
+
+        Inertia.post('/register', {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+        });
+    }
+
     return (
         <div>
             <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-white">
@@ -12,7 +37,7 @@ export default function Registration() {
                     </a>
                 </div>
                 <br />
-                    <form>
+                    <form onSubmit={storeRegister}>
                         <div>
                             <label
                                 htmlFor="name"
@@ -24,6 +49,8 @@ export default function Registration() {
                                 <input
                                     type="text"
                                     name="name"
+                                    onChange={(e)=> setName(e.target.value)}
+                                    placeholder="Full Name"
                                     className="bg-cyan-900 block w-full px-4 py-2 mt-2 text-white border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             </div>
@@ -39,6 +66,8 @@ export default function Registration() {
                                 <input
                                     type="email"
                                     name="email"
+                                    onChange={(e)=> setEmail(e.target.value)}
+                                    placeholder="Email Address"
                                     className="bg-cyan-900 block w-full px-4 py-2 mt-2 text-white border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             </div>
@@ -54,6 +83,8 @@ export default function Registration() {
                                 <input
                                     type="password"
                                     name="password"
+                                    onChange={(e)=>setPassword(e.target.value)}
+                                    placeholder="Password"
                                     className="block w-full px-4 py-2 mt-2 bg-cyan-900 text-white border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             </div>
@@ -69,6 +100,8 @@ export default function Registration() {
                                 <input
                                     type="password"
                                     name="password_confirmation"
+                                    onChange={(e)=>setPassword_confirmation(e.target.value)}
+                                    placeholder="Password Confirmation"
                                     className="block w-full px-4 py-2 mt-2 text-white bg-cyan-900 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             </div>
@@ -76,7 +109,7 @@ export default function Registration() {
                         <div className="flex items-center justify-end mt-4">
                             <a
                                 className="text-sm text-gray-600 underline hover:text-gray-900"
-                                href="#"
+                                href="/login"
                             >
                                 Already registered?
                             </a>
