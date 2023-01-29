@@ -22,8 +22,6 @@ class jadwal_bimbel extends Model
         return $this->belongsTo(Programs_x_kelas::class,'programs_x_kelas_id','id');
     }
 
-
-
     public function tentor(){
         return $this->belongsTo(Tentor::class);
     }

@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('tentors', function (Blueprint $table) {
             $table->id();
             $table->string('tentors_name');
+            $table->string('tentors_email');
+            $table->string('tentors_phone_number');
             $table->unsignedBigInteger('mapels_id');
 
-            // $table->string('tentors_email')->unique();
             // $table->timestamp('tentors_email_verified_at')->nullable();
             // $table->string('tentors_password');
             // $table->rememberToken();

@@ -56,7 +56,19 @@ export default function TentorIndex({ tentors, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        NAMA TENTOR
+                                        NAMA
+                                    </th>
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
+                                        EMAIL
+                                    </th>
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
+                                        NO. HP/ NO. TELP
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
@@ -78,6 +90,12 @@ export default function TentorIndex({ tentors, session }) {
                                     <tr className={"bg-white"} key={index}>
                                         <td className="border border-1 bg-white border-gray-200">
                                             {tentor.tentors_name}
+                                        </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {tentor.tentors_email}
+                                        </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {tentor.tentors_phone_number}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
                                             {tentor.mapel.mapels_name}

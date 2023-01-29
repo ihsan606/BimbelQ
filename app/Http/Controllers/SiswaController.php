@@ -2,34 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
-use Inertia\Inertia;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class SiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //get siswas
         $siswas = Siswa::when(request()->q, function($siswas) {
-            $siswas = $siswas->where('name', 'like', '%'. request()->q . '%');
-        })->latest()->paginate(5);
+            $siswas = $siswas->where('siswa_name', 'like', '%'. request()->q . '%');
+        })->latest('id')->get();
 
-        //return inertia
-        // return inertia('Siswas/Index', [
-        //     'siswas' =>$siswas
-        // ]);
-        return Inertia::render('Siswas/Index', [
-            'siswas' =>$siswas
+        return inertia('Siswas/Index', [
+            'siswas' => $siswas
         ]);
-        //return $siswas;
+
     }
 
     /**
@@ -39,7 +29,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Siswas/Create');
+        return inertia('Siswas/Create');
     }
 
     /**
@@ -50,13 +40,10 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * validate
-         */
-
         $validator = Validator::make($request->all(), [
-            'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_name'   => 'required',
+            'siswa_name'          => 'required|unique:siswas',
+            'siswa_email'   => 'required',
+            'siswa_phone_number'   => 'required',
         ]);
 
         //if validation fails
@@ -64,16 +51,18 @@ class SiswaController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-
-        //create siswa
-        $siswa = Siswa::create([
-            'siswa_email'      => $request->siswa_email,
-            'siswa_name'   => $request->siswa_name,
+        //create sesi
+        $siswas = Siswa::create([
+            'siswa_name'          => $request->siswa_name,
+            'siswa_email'   => $request->siswa_email,
+            'siswa_phone_number'   => $request->siswa_phone_number,
         ]);
 
         //redirect
-        return redirect()->route('siswas.index');
-        // return $siswa;
+        // return redirect()->route('sesis.index');
+
+        return $siswas;
+
     }
 
     /**
@@ -83,11 +72,12 @@ class SiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+    // public function edit(Sesi $sesi)
     {
         $siswa = Siswa::findOrFail($id);
 
-        return Inertia::render('Siswas/Index', [
-            'siswa' =>$siswa
+        return inertia('Siswas/Edit', [
+            'siswa' => $siswa,
         ]);
     }
 
@@ -100,24 +90,27 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /**
-         * validate
-         */
-        $this->validate($request, [
-            'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_nama'   => 'required',
+        $validator = Validator::make($request->all(), [
+            'siswa_name'          => 'required|unique:siswas',
+            'siswa_email'   => 'required',
+            'siswa_phone_number'   => 'required',
         ]);
 
-        $siswas = Siswa::findOrFail($id);
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        
+        $siswa = Siswa::findOrFail($id);
 
-        //update siswas
-        $siswas->update([
-            'siswa_email'      => $request->siswa_email,
-            'siswa_nama'   => $request->siswa_nama,
+        //update sesi
+        $siswa->update([
+            'siswa_name'          => $request->siswa_name,
+            'siswa_email'   => $request->siswa_email,
+            'siswa_phone_number'   => $request->siswa_phone_number,
         ]);
 
-        //redirect
-        return $siswas;
+        return redirect()->route('siswas.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
@@ -128,12 +121,15 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        $siswas = Siswa::findOrFail($id);
+        //find by ID
+        $siswa = Siswa::findOrFail($id);
 
-        $siswas->delete();
+        //delete
+        $siswa->delete();
 
-        if($siswas){
-            return "sukses dihapus";
+        //redirect
+        if($siswa){
+            return redirect()->route('siswas.index')->with('success', 'Data Berhasil Dihapus!');
         }
     }
 }

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('tagihan_siswas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('siswa_id');
+            $table->unsignedBigInteger('siswas_id');
             $table->integer('total_tagihan');
             $table->string('bulan');
             $table->timestamps();
 
-            $table->foreign('siswa_id')->references('id')->on('siswas');
+            $table->foreign('siswas_id')->references('id')->on('siswas');
         });
     }
 
