@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'register'])->name('register');
+Route::post('/register',[\App\Http\Controllers\RegisterController::class, 'store']);
 
 Route::post('/auth/login',[\App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
@@ -44,6 +44,8 @@ Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
 
 Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
 
+Route::get('/tagihan', [\App\Http\Controllers\TagihanController::class,'index']);
+
 Route::resource('/jadwal-bimbels',\App\Http\Controllers\JadwalBimbelController::class);
 
 Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
@@ -57,3 +59,6 @@ Route::resource('/sesi', \App\Http\Controllers\SesiController::class);
 Route::resource('/tentors', \App\Http\Controllers\TentorController::class);
 
 Route::resource('/kehadiransiswa', \App\Http\Controllers\KehadiranSiswaController::class);
+Route::get('/tentor-by-sesi',[\App\Http\Controllers\TentorController::class,'getBySesiId']);
+
+

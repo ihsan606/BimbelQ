@@ -23,7 +23,7 @@ class jadwal_bimbel extends Model
     }
 
     public function tentor(){
-        return $this->belongsTo(Tentor::class);
+        return $this->belongsTo(Tentor::class, 'tentor_id', 'id');
     }
 
     public function siswa_absensi(){

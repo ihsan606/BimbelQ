@@ -18,7 +18,7 @@ class KehadiranSiswaController extends Controller
      */
     public function index()
     {
-        $kehadirans = jadwal_bimbel::with('siswa','sesi', 'programs_x_kelas.program', 'programs_x_kelas.kelas')->orderBy('siswas_id')->orderBy('sesis_id')->get();
+        $kehadirans = siswa_absensi::with('siswa','jadwal_bimbel.sesi', 'jadwal_bimbel.programs_x_kelas.program', 'jadwal_bimbel.programs_x_kelas.kelas', 'jadwal_bimbel.tentor.mapel')->orderBy('siswas_id')->orderBy('jadwal_bimbels_id')->get();
 
         return inertia('KehadiranSiswa/Index', [
             'kehadirans' => $kehadirans
@@ -37,7 +37,7 @@ class KehadiranSiswaController extends Controller
     public function create()
     {
         $siswas = Siswa::all();
-        $jadwal_bimbels = jadwal_bimbel::all();
+        $jadwal_bimbels = jadwal_bimbel::with('siswa', 'programs_x_kelas.program', 'programs_x_kelas.kelas', 'sesi', 'tentor.mapel')->orderBy('siswas_id')->orderBy('programs_x_kelas_id')->orderBy('tentor_id')->orderBy('sesis_id')->get();
 
         return inertia('KehadiranSiswa/Create',[
             'siswas' => $siswas,
@@ -106,19 +106,17 @@ class KehadiranSiswaController extends Controller
      */
     public function edit($id)
     {
-        $kehadiran = siswa_absensi::findOrFail($id)->with('siswa','jadwal_bimbel');
+        $kehadirans = siswa_absensi::findOrFail($id)->with('siswa','jadwal_bimbel.siswa', 'jadwal_bimbel.programs_x_kelas.program', 'jadwal_bimbel.programs_x_kelas.kelas', 'jadwal_bimbel.sesi', 'jadwal_bimbel.tentor.mapel');
 
-        if($kehadiran){
-            $kehadiran = siswa_absensi::with('siswa','jadwal_bimbel')->whereId($id)->first();
+        if($kehadirans){
+            $kehadirans = siswa_absensi::with('siswa','jadwal_bimbel.siswa', 'jadwal_bimbel.programs_x_kelas.program', 'jadwal_bimbel.programs_x_kelas.kelas', 'jadwal_bimbel.sesi', 'jadwal_bimbel.tentor.mapel')->whereId($id)->first();
         }
 
         $siswas = Siswa::all();
-        $jadwal_bimbels = jadwal_bimbel::all();
-
-
+        $jadwal_bimbels = jadwal_bimbel::with('siswa', 'programs_x_kelas.program', 'programs_x_kelas.kelas', 'sesi', 'tentor.mapel')->orderBy('siswas_id')->orderBy('programs_x_kelas_id')->orderBy('tentor_id')->orderBy('sesis_id')->get();
 
         return inertia('KehadiranSiswa/Edit', [
-            'kehadiran' => $kehadiran,
+            'kehadirans' => $kehadirans,
             'siswas' => $siswas,
             'jadwal_bimbels' => $jadwal_bimbels
         ]);
@@ -137,7 +135,7 @@ class KehadiranSiswaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'siswa_id'          => 'required',
-            'jadwal_bimbel_id'             => 'required',
+            'jadwal_bimbels_id'             => 'required',
             'absensi_status'        => 'required'
         ]);
 

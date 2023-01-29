@@ -1,5 +1,6 @@
 //import React
 import React from "react";
+import moment from "moment";
 
 //import Link
 import { Link } from "@inertiajs/inertia-react";
@@ -62,19 +63,13 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        PROGRAM
+                                        JADWAL BIMBEL
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        KELAS
-                                    </th>
-                                    <th
-                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
-                                        scope="col"
-                                    >
-                                        SESI
+                                        TANGGAL
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
@@ -98,20 +93,43 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                             {kehadiran.siswa.siswa_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {kehadiran.sesi.sesi_name}
-                                        </td>
-                                        <td className="border border-1 bg-white border-gray-200">
                                             {
-                                                kehadiran.programs_x_kelas
-                                                    .program.program_name
+                                                kehadiran.jadwal_bimbel
+                                                    .programs_x_kelas.program
+                                                    .program_name
                                             }
-                                        </td>
-                                        <td className="border border-1 bg-white border-gray-200">
+                                            {" - "}
                                             {
-                                                kehadiran.programs_x_kelas.kelas
+                                                kehadiran.jadwal_bimbel
+                                                    .programs_x_kelas.kelas
                                                     .kelas_name
                                             }
+                                            {" - "}
+                                            {
+                                                kehadiran.jadwal_bimbel.tentor
+                                                    .mapel.mapels_name
+                                            }
+                                            {" - "}
+                                            {
+                                                kehadiran.jadwal_bimbel.sesi
+                                                    .sesi_name
+                                            }
                                         </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {moment(
+                                                kehadiran.jadwal_bimbel
+                                                    .created_at
+                                            ).format("D-MM-YYYY")}
+                                        </td>
+                                        <td className="border border-1 bg-white border-gray-200">
+                                            {kehadiran.absensi_status == 0
+                                                ? "Tidak Hadir"
+                                                : "Hadir"}
+                                        </td>
+
+                                        {/* <td className="border border-1 bg-white border-gray-200">
+                                            {kehadiran.tentor.tentors_name}
+                                        </td> */}
 
                                         <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
                                             <Link

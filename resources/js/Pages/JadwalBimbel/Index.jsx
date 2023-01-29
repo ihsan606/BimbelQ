@@ -8,7 +8,7 @@ import SidebarNew from "../../Layouts/SidebarNew";
 import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
-export default function ClassIndex({ jadwal_bimbels, session }) {
+export default function JadwalIndex({ jadwal_bimbels, session }) {
     const deleteJadwal = async (id) => {
         Inertia.delete(`/class/${id}`);
 
@@ -20,6 +20,15 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
         });
     };
 
+    const sum = (data) => {
+        let result = 0;
+        data.map((jadwal, idx) => {
+            result += jadwal.jadwal_bimbels.length;
+        });
+
+        return result;
+    };
+
     useEffect(() => {
         console.log(jadwal_bimbels);
     });
@@ -28,7 +37,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
         <SidebarNew>
             <div>
                 <Link
-                    href="/class/create"
+                    href="/jadwal-bimbels/create"
                     className="btn text-white gap-x-2 shadow-lg btn-success btn-md ml-8"
                 >
                     <svg
@@ -43,7 +52,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                             fill="white"
                         />
                     </svg>
-                    TAMBAH KELAS
+                    TAMBAH JADWAL BIMBEL
                 </Link>
 
                 <div className=" border-0 rounded shadow-sm">
@@ -70,6 +79,12 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                         SISWA
                                     </th>
                                     <th
+                                        className="bg-[#E1F4FF] font-medium text-[#1597E5]"
+                                        scope="col"
+                                    >
+                                        PROGRAM / KELAS
+                                    </th>
+                                    <th
                                         className="bg-[#E1F4FF] font-medium text-[#1597E5] text-center w-32"
                                         scope="col"
                                     >
@@ -82,48 +97,325 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                     <>
                                         {sesi.tentors.length > 1 && (
                                             <>
-                                                <tr key={index}>
-                                                    <td
-                                                        rowSpan={
-                                                            sesi.tentors.length
-                                                        }
-                                                    >
-                                                        {" "}
-                                                        {sesi.sesi_name}{" "}
-                                                    </td>
-                                                    <td>
-                                                        {" "}
-                                                        {
-                                                            sesi.tentors[index]
-                                                                .tentors_name
-                                                        }{" "}
-                                                    </td>
-                                                    <td className="text-center grid grid-cols-2">
-                                                        edit
-                                                    </td>
-                                                </tr>
                                                 {sesi.tentors.map(
-                                                    (tentor, i) => (
+                                                    (tentor, idx) => (
                                                         <>
-                                                            {sesi.tentors[index]
-                                                                .id !=
-                                                                tentor.id && (
+                                                            {tentor
+                                                                .jadwal_bimbels
+                                                                .length > 1 && (
+                                                                <>
+                                                                    <tr
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        <td
+                                                                            className="border border-1 bg-white border-gray-200"
+                                                                            rowSpan={sum(
+                                                                                sesi.tentors
+                                                                            )}
+                                                                        >
+                                                                            {" "}
+                                                                            {
+                                                                                sesi.sesi_name
+                                                                            }{" "}
+                                                                        </td>
+                                                                        <td
+                                                                            className="border border-1 bg-white border-gray-200"
+                                                                            rowSpan={
+                                                                                sesi
+                                                                                    .tentors[
+                                                                                    index
+                                                                                ]
+                                                                                    .jadwal_bimbels
+                                                                                    .length
+                                                                            }
+                                                                        >
+                                                                            {" "}
+                                                                            {
+                                                                                tentor.tentors_name
+                                                                            }{" "}
+                                                                        </td>
+                                                                        <td className="border border-1 bg-white border-gray-200">
+                                                                            {
+                                                                                tentor
+                                                                                    .jadwal_bimbels[0]
+                                                                                    .siswa
+                                                                                    .siswa_name
+                                                                            }
+                                                                        </td>
+                                                                        <td className="border border-1 bg-white border-gray-200">
+                                                                            {
+                                                                                tentor
+                                                                                    .jadwal_bimbels[0]
+                                                                                    .programs_x_kelas
+                                                                                    .program
+                                                                                    .program_name
+                                                                            }{" "}
+                                                                            /{" "}
+                                                                            {
+                                                                                tentor
+                                                                                    .jadwal_bimbels[0]
+                                                                                    .programs_x_kelas
+                                                                                    .kelas
+                                                                                    .kelas_name
+                                                                            }{" "}
+                                                                        </td>
+                                                                        <td className="text-center grid grid-cols-2 border border-1 bg-white border-gray-200">
+                                                                            <Link
+                                                                                href={`/jadwal-bimbel/${tentor.jadwal_bimbels[0].id}/edit`}
+                                                                            >
+                                                                                <svg
+                                                                                    width="32"
+                                                                                    height="32"
+                                                                                    viewBox="0 0 32 32"
+                                                                                    fill="none"
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                >
+                                                                                    <rect
+                                                                                        width="32"
+                                                                                        height="32"
+                                                                                        rx="3"
+                                                                                        fill="#6EC889"
+                                                                                    />
+                                                                                    <path
+                                                                                        d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z"
+                                                                                        fill="white"
+                                                                                    />
+                                                                                    <path
+                                                                                        d="M24.7085 9.63128L22.3685 7.29128C21.9785 6.90128 21.3485 6.90128 20.9585 7.29128L19.1285 9.12128L22.8785 12.8713L24.7085 11.0413C25.0985 10.6513 25.0985 10.0213 24.7085 9.63128Z"
+                                                                                        fill="white"
+                                                                                    />
+                                                                                </svg>
+                                                                            </Link>
+                                                                            <button
+                                                                                onClick={() =>
+                                                                                    deleteJadwal(
+                                                                                        tentor
+                                                                                            .jadwal_bimbels[0]
+                                                                                            .id
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                <svg
+                                                                                    width="32"
+                                                                                    height="32"
+                                                                                    viewBox="0 0 32 32"
+                                                                                    fill="none"
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                >
+                                                                                    <rect
+                                                                                        width="32"
+                                                                                        height="32"
+                                                                                        rx="3"
+                                                                                        fill="#CA2E43"
+                                                                                    />
+                                                                                    <path
+                                                                                        d="M19.3807 10.6667V9.45833C19.3807 8.6625 18.804 8 18.0085 8H13.9875C13.196 8 12.6193 8.6625 12.6193 9.45833V10.6667H9V12H9.36591C9.36591 12 9.58068 12.025 9.69205 12.1417C9.80341 12.2583 9.84716 12.5167 9.84716 12.5167L10.6028 22.5875C10.6625 23.8125 10.6625 24 12.0347 24H19.9653C21.3375 24 21.3375 23.8167 21.3972 22.5917L22.1528 12.525C22.1528 12.525 22.1966 12.2625 22.308 12.1458C22.4193 12.0292 22.6341 12.0042 22.6341 12.0042H23V10.6708H19.3807V10.6667ZM13.4545 9.45833C13.4545 9.05833 13.7648 8.83333 14.1585 8.83333H17.8057C18.1994 8.83333 18.5455 9.0625 18.5455 9.45833V10.6667H13.4545V9.45833ZM13.1165 21.3333L12.7068 13.3333H13.5142L13.9318 21.3333H13.1165ZM16.4415 21.3333H15.5665V13.3333H16.4415V21.3333ZM18.8915 21.3333H18.0801L18.4977 13.3333H19.3051L18.8915 21.3333Z"
+                                                                                        fill="white"
+                                                                                    />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    {tentor.jadwal_bimbels.map(
+                                                                        (
+                                                                            jadwal,
+                                                                            id
+                                                                        ) => (
+                                                                            <>
+                                                                                {jadwal
+                                                                                    .siswa
+                                                                                    .id !=
+                                                                                    tentor
+                                                                                        .jadwal_bimbels[0]
+                                                                                        .siswa
+                                                                                        .id && (
+                                                                                    <>
+                                                                                        <tr>
+                                                                                            <td className="border border-1 bg-white border-gray-200">
+                                                                                                {
+                                                                                                    jadwal
+                                                                                                        .siswa
+                                                                                                        .siswa_name
+                                                                                                }
+                                                                                            </td>
+                                                                                            <td className="border border-1 bg-white border-gray-200">
+                                                                                                {
+                                                                                                    jadwal
+                                                                                                        .programs_x_kelas
+                                                                                                        .program
+                                                                                                        .program_name
+                                                                                                }{" "}
+                                                                                                /{" "}
+                                                                                                {
+                                                                                                    jadwal
+                                                                                                        .programs_x_kelas
+                                                                                                        .kelas
+                                                                                                        .kelas_name
+                                                                                                }{" "}
+                                                                                            </td>
+
+                                                                                            <td className="text-center grid grid-cols-2 border border-1 bg-white border-gray-200">
+                                                                                                <Link
+                                                                                                    href={`/jadwal-bimbel/${jadwal.id}/edit`}
+                                                                                                >
+                                                                                                    <svg
+                                                                                                        width="32"
+                                                                                                        height="32"
+                                                                                                        viewBox="0 0 32 32"
+                                                                                                        fill="none"
+                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                    >
+                                                                                                        <rect
+                                                                                                            width="32"
+                                                                                                            height="32"
+                                                                                                            rx="3"
+                                                                                                            fill="#6EC889"
+                                                                                                        />
+                                                                                                        <path
+                                                                                                            d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z"
+                                                                                                            fill="white"
+                                                                                                        />
+                                                                                                        <path
+                                                                                                            d="M24.7085 9.63128L22.3685 7.29128C21.9785 6.90128 21.3485 6.90128 20.9585 7.29128L19.1285 9.12128L22.8785 12.8713L24.7085 11.0413C25.0985 10.6513 25.0985 10.0213 24.7085 9.63128Z"
+                                                                                                            fill="white"
+                                                                                                        />
+                                                                                                    </svg>
+                                                                                                </Link>
+                                                                                                <button
+                                                                                                    onClick={() =>
+                                                                                                        deleteJadwal(
+                                                                                                            jadwal.id
+                                                                                                        )
+                                                                                                    }
+                                                                                                >
+                                                                                                    <svg
+                                                                                                        width="32"
+                                                                                                        height="32"
+                                                                                                        viewBox="0 0 32 32"
+                                                                                                        fill="none"
+                                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                                    >
+                                                                                                        <rect
+                                                                                                            width="32"
+                                                                                                            height="32"
+                                                                                                            rx="3"
+                                                                                                            fill="#CA2E43"
+                                                                                                        />
+                                                                                                        <path
+                                                                                                            d="M19.3807 10.6667V9.45833C19.3807 8.6625 18.804 8 18.0085 8H13.9875C13.196 8 12.6193 8.6625 12.6193 9.45833V10.6667H9V12H9.36591C9.36591 12 9.58068 12.025 9.69205 12.1417C9.80341 12.2583 9.84716 12.5167 9.84716 12.5167L10.6028 22.5875C10.6625 23.8125 10.6625 24 12.0347 24H19.9653C21.3375 24 21.3375 23.8167 21.3972 22.5917L22.1528 12.525C22.1528 12.525 22.1966 12.2625 22.308 12.1458C22.4193 12.0292 22.6341 12.0042 22.6341 12.0042H23V10.6708H19.3807V10.6667ZM13.4545 9.45833C13.4545 9.05833 13.7648 8.83333 14.1585 8.83333H17.8057C18.1994 8.83333 18.5455 9.0625 18.5455 9.45833V10.6667H13.4545V9.45833ZM13.1165 21.3333L12.7068 13.3333H13.5142L13.9318 21.3333H13.1165ZM16.4415 21.3333H15.5665V13.3333H16.4415V21.3333ZM18.8915 21.3333H18.0801L18.4977 13.3333H19.3051L18.8915 21.3333Z"
+                                                                                                            fill="white"
+                                                                                                        />
+                                                                                                    </svg>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </>
+                                                                                )}
+                                                                            </>
+                                                                        )
+                                                                    )}
+                                                                </>
+                                                            )}
+
+                                                            {tentor.id !=
+                                                                sesi.tentors[0]
+                                                                    .id && (
                                                                 <tr>
-                                                                    <td>
-                                                                        {" "}
+                                                                    <td className="border border-1 bg-white border-gray-200">
                                                                         {
                                                                             tentor.tentors_name
                                                                         }{" "}
                                                                     </td>
-                                                                    <td className="text-center grid grid-cols-2">
-                                                                        edit
+                                                                    <td className="border border-1 bg-white border-gray-200">
+                                                                        {
+                                                                            tentor
+                                                                                .jadwal_bimbels[0]
+                                                                                .siswa
+                                                                                .siswa_name
+                                                                        }{" "}
+                                                                    </td>
+                                                                    <td className="border border-1 bg-white border-gray-200">
+                                                                        {
+                                                                            tentor
+                                                                                .jadwal_bimbels[0]
+                                                                                .programs_x_kelas
+                                                                                .program
+                                                                                .program_name
+                                                                        }{" "}
+                                                                        /{" "}
+                                                                        {
+                                                                            tentor
+                                                                                .jadwal_bimbels[0]
+                                                                                .programs_x_kelas
+                                                                                .kelas
+                                                                                .kelas_name
+                                                                        }{" "}
+                                                                    </td>
+
+                                                                    <td className="text-center grid grid-cols-2 border border-1 bg-white border-gray-200">
+                                                                        <Link
+                                                                            href={`/jadwal-bimbel/${tentor.jadwal_bimbels[0].id}/edit`}
+                                                                        >
+                                                                            <svg
+                                                                                width="32"
+                                                                                height="32"
+                                                                                viewBox="0 0 32 32"
+                                                                                fill="none"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                            >
+                                                                                <rect
+                                                                                    width="32"
+                                                                                    height="32"
+                                                                                    rx="3"
+                                                                                    fill="#6EC889"
+                                                                                />
+                                                                                <path
+                                                                                    d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z"
+                                                                                    fill="white"
+                                                                                />
+                                                                                <path
+                                                                                    d="M24.7085 9.63128L22.3685 7.29128C21.9785 6.90128 21.3485 6.90128 20.9585 7.29128L19.1285 9.12128L22.8785 12.8713L24.7085 11.0413C25.0985 10.6513 25.0985 10.0213 24.7085 9.63128Z"
+                                                                                    fill="white"
+                                                                                />
+                                                                            </svg>
+                                                                        </Link>
+                                                                        <button
+                                                                            onClick={() =>
+                                                                                deleteJadwal(
+                                                                                    tentor
+                                                                                        .jadwal_bimbels[0]
+                                                                                        .id
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <svg
+                                                                                width="32"
+                                                                                height="32"
+                                                                                viewBox="0 0 32 32"
+                                                                                fill="none"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                            >
+                                                                                <rect
+                                                                                    width="32"
+                                                                                    height="32"
+                                                                                    rx="3"
+                                                                                    fill="#CA2E43"
+                                                                                />
+                                                                                <path
+                                                                                    d="M19.3807 10.6667V9.45833C19.3807 8.6625 18.804 8 18.0085 8H13.9875C13.196 8 12.6193 8.6625 12.6193 9.45833V10.6667H9V12H9.36591C9.36591 12 9.58068 12.025 9.69205 12.1417C9.80341 12.2583 9.84716 12.5167 9.84716 12.5167L10.6028 22.5875C10.6625 23.8125 10.6625 24 12.0347 24H19.9653C21.3375 24 21.3375 23.8167 21.3972 22.5917L22.1528 12.525C22.1528 12.525 22.1966 12.2625 22.308 12.1458C22.4193 12.0292 22.6341 12.0042 22.6341 12.0042H23V10.6708H19.3807V10.6667ZM13.4545 9.45833C13.4545 9.05833 13.7648 8.83333 14.1585 8.83333H17.8057C18.1994 8.83333 18.5455 9.0625 18.5455 9.45833V10.6667H13.4545V9.45833ZM13.1165 21.3333L12.7068 13.3333H13.5142L13.9318 21.3333H13.1165ZM16.4415 21.3333H15.5665V13.3333H16.4415V21.3333ZM18.8915 21.3333H18.0801L18.4977 13.3333H19.3051L18.8915 21.3333Z"
+                                                                                    fill="white"
+                                                                                />
+                                                                            </svg>
+                                                                        </button>
                                                                     </td>
                                                                 </tr>
                                                             )}
                                                         </>
                                                     )
                                                 )}
-                                                <tr></tr>
                                             </>
                                         )}
 
@@ -134,6 +426,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                     <>
                                                         <tr>
                                                             <td
+                                                                className="border border-1 bg-white border-gray-200"
                                                                 rowSpan={
                                                                     sesi
                                                                         .tentors[0]
@@ -144,6 +437,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                                 {sesi.sesi_name}{" "}
                                                             </td>
                                                             <td
+                                                                className="border border-1 bg-white border-gray-200"
                                                                 rowSpan={
                                                                     sesi
                                                                         .tentors[0]
@@ -157,7 +451,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                                         .tentors_name
                                                                 }{" "}
                                                             </td>
-                                                            <td>
+                                                            <td className="border border-1 bg-white border-gray-200">
                                                                 {
                                                                     sesi
                                                                         .tentors[0]
@@ -166,14 +460,82 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                                         .siswa_name
                                                                 }{" "}
                                                             </td>
-                                                            <td className="text-center grid grid-cols-2">
-                                                                edit{" "}
+                                                            <td className="border border-1 bg-white border-gray-200">
                                                                 {
                                                                     sesi
                                                                         .tentors[0]
-                                                                        .jadwal_bimbels
-                                                                        .length
-                                                                }
+                                                                        .jadwal_bimbels[0]
+                                                                        .programs_x_kelas
+                                                                        .program
+                                                                        .program_name
+                                                                }{" "}
+                                                                /{" "}
+                                                                {
+                                                                    sesi
+                                                                        .tentors[0]
+                                                                        .jadwal_bimbels[0]
+                                                                        .programs_x_kelas
+                                                                        .kelas
+                                                                        .kelas_name
+                                                                }{" "}
+                                                            </td>
+
+                                                            <td className="text-center grid grid-cols-2 border border-1 bg-white border-gray-200">
+                                                                <Link
+                                                                    href={`/jadwal-bimbel/${sesi.tentors[0].jadwal_bimbels[0].id}/edit`}
+                                                                >
+                                                                    <svg
+                                                                        width="32"
+                                                                        height="32"
+                                                                        viewBox="0 0 32 32"
+                                                                        fill="none"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                    >
+                                                                        <rect
+                                                                            width="32"
+                                                                            height="32"
+                                                                            rx="3"
+                                                                            fill="#6EC889"
+                                                                        />
+                                                                        <path
+                                                                            d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z"
+                                                                            fill="white"
+                                                                        />
+                                                                        <path
+                                                                            d="M24.7085 9.63128L22.3685 7.29128C21.9785 6.90128 21.3485 6.90128 20.9585 7.29128L19.1285 9.12128L22.8785 12.8713L24.7085 11.0413C25.0985 10.6513 25.0985 10.0213 24.7085 9.63128Z"
+                                                                            fill="white"
+                                                                        />
+                                                                    </svg>
+                                                                </Link>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        deleteJadwal(
+                                                                            sesi
+                                                                                .tentors[0]
+                                                                                .jadwal_bimbels[0]
+                                                                                .id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <svg
+                                                                        width="32"
+                                                                        height="32"
+                                                                        viewBox="0 0 32 32"
+                                                                        fill="none"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                    >
+                                                                        <rect
+                                                                            width="32"
+                                                                            height="32"
+                                                                            rx="3"
+                                                                            fill="#CA2E43"
+                                                                        />
+                                                                        <path
+                                                                            d="M19.3807 10.6667V9.45833C19.3807 8.6625 18.804 8 18.0085 8H13.9875C13.196 8 12.6193 8.6625 12.6193 9.45833V10.6667H9V12H9.36591C9.36591 12 9.58068 12.025 9.69205 12.1417C9.80341 12.2583 9.84716 12.5167 9.84716 12.5167L10.6028 22.5875C10.6625 23.8125 10.6625 24 12.0347 24H19.9653C21.3375 24 21.3375 23.8167 21.3972 22.5917L22.1528 12.525C22.1528 12.525 22.1966 12.2625 22.308 12.1458C22.4193 12.0292 22.6341 12.0042 22.6341 12.0042H23V10.6708H19.3807V10.6667ZM13.4545 9.45833C13.4545 9.05833 13.7648 8.83333 14.1585 8.83333H17.8057C18.1994 8.83333 18.5455 9.0625 18.5455 9.45833V10.6667H13.4545V9.45833ZM13.1165 21.3333L12.7068 13.3333H13.5142L13.9318 21.3333H13.1165ZM16.4415 21.3333H15.5665V13.3333H16.4415V21.3333ZM18.8915 21.3333H18.0801L18.4977 13.3333H19.3051L18.8915 21.3333Z"
+                                                                            fill="white"
+                                                                        />
+                                                                    </svg>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                         {sesi.tentors[0].jadwal_bimbels.map(
@@ -187,68 +549,130 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                                             .siswa
                                                                             .id && (
                                                                         <tr>
-                                                                            <td>
+                                                                            <td className="border border-1 bg-white border-gray-200">
                                                                                 {
                                                                                     siswa
                                                                                         .siswa
                                                                                         .siswa_name
                                                                                 }{" "}
                                                                             </td>
-                                                                            <td className="text-center grid grid-cols-2">
-                                                                                edit{" "}
+                                                                            <td className="border border-1 bg-white border-gray-200">
                                                                                 {
-                                                                                    sesi
-                                                                                        .tentors[0]
-                                                                                        .jadwal_bimbels
-                                                                                        .length
-                                                                                }
+                                                                                    siswa
+                                                                                        .programs_x_kelas
+                                                                                        .program
+                                                                                        .program_name
+                                                                                }{" "}
+                                                                                /{" "}
+                                                                                {
+                                                                                    siswa
+                                                                                        .programs_x_kelas
+                                                                                        .kelas
+                                                                                        .kelas_name
+                                                                                }{" "}
+                                                                            </td>
+
+                                                                            <td className="text-center grid grid-cols-2 border border-1 bg-white border-gray-200">
+                                                                                <Link
+                                                                                    href={`/jadwal-bimbel/${siswa.id}/edit`}
+                                                                                >
+                                                                                    <svg
+                                                                                        width="32"
+                                                                                        height="32"
+                                                                                        viewBox="0 0 32 32"
+                                                                                        fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                    >
+                                                                                        <rect
+                                                                                            width="32"
+                                                                                            height="32"
+                                                                                            rx="3"
+                                                                                            fill="#6EC889"
+                                                                                        />
+                                                                                        <path
+                                                                                            d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z"
+                                                                                            fill="white"
+                                                                                        />
+                                                                                        <path
+                                                                                            d="M24.7085 9.63128L22.3685 7.29128C21.9785 6.90128 21.3485 6.90128 20.9585 7.29128L19.1285 9.12128L22.8785 12.8713L24.7085 11.0413C25.0985 10.6513 25.0985 10.0213 24.7085 9.63128Z"
+                                                                                            fill="white"
+                                                                                        />
+                                                                                    </svg>
+                                                                                </Link>
+                                                                                <button
+                                                                                    onClick={() =>
+                                                                                        deleteJadwal(
+                                                                                            siswa.id
+                                                                                        )
+                                                                                    }
+                                                                                >
+                                                                                    <svg
+                                                                                        width="32"
+                                                                                        height="32"
+                                                                                        viewBox="0 0 32 32"
+                                                                                        fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                                    >
+                                                                                        <rect
+                                                                                            width="32"
+                                                                                            height="32"
+                                                                                            rx="3"
+                                                                                            fill="#CA2E43"
+                                                                                        />
+                                                                                        <path
+                                                                                            d="M19.3807 10.6667V9.45833C19.3807 8.6625 18.804 8 18.0085 8H13.9875C13.196 8 12.6193 8.6625 12.6193 9.45833V10.6667H9V12H9.36591C9.36591 12 9.58068 12.025 9.69205 12.1417C9.80341 12.2583 9.84716 12.5167 9.84716 12.5167L10.6028 22.5875C10.6625 23.8125 10.6625 24 12.0347 24H19.9653C21.3375 24 21.3375 23.8167 21.3972 22.5917L22.1528 12.525C22.1528 12.525 22.1966 12.2625 22.308 12.1458C22.4193 12.0292 22.6341 12.0042 22.6341 12.0042H23V10.6708H19.3807V10.6667ZM13.4545 9.45833C13.4545 9.05833 13.7648 8.83333 14.1585 8.83333H17.8057C18.1994 8.83333 18.5455 9.0625 18.5455 9.45833V10.6667H13.4545V9.45833ZM13.1165 21.3333L12.7068 13.3333H13.5142L13.9318 21.3333H13.1165ZM16.4415 21.3333H15.5665V13.3333H16.4415V21.3333ZM18.8915 21.3333H18.0801L18.4977 13.3333H19.3051L18.8915 21.3333Z"
+                                                                                            fill="white"
+                                                                                        />
+                                                                                    </svg>
+                                                                                </button>
                                                                             </td>
                                                                         </tr>
                                                                     )}
                                                                 </>
                                                             )
                                                         )}
+                                                        <>
+                                                            )
+                                                            {sesi.tentors[0].jadwal_bimbels.map(
+                                                                (siswa, d) => (
+                                                                    <>
+                                                                        {siswa
+                                                                            .siswa
+                                                                            .id !==
+                                                                            sesi
+                                                                                .tentors[0]
+                                                                                .jadwal_bimbels[0]
+                                                                                .siswa
+                                                                                .id && (
+                                                                            <tr>
+                                                                                <td>
+                                                                                    {
+                                                                                        siswa
+                                                                                            .siswa
+                                                                                            .siswa_name
+                                                                                    }{" "}
+                                                                                </td>
+                                                                                <td className="text-center grid grid-cols-2">
+                                                                                    edit{" "}
+                                                                                    {
+                                                                                        sesi
+                                                                                            .tentors[0]
+                                                                                            .jadwal_bimbels
+                                                                                            .length
+                                                                                    }
+                                                                                </td>
+                                                                            </tr>
+                                                                        )}
+                                                                    </>
+                                                                )
+                                                            )}
+                                                        </>
                                                     </>
                                                 )}
                                             </>
                                         )}
                                     </>
                                 ))}
-                                {/*<tr>*/}
-                                {/*    <td rowSpan="5">SENIN</td>*/}
-                                {/*    <td rowSpan="3">mentor 1</td>*/}
-                                {/*    <td>siswa 1</td>*/}
-                                {/*    <td>Edit</td>*/}
-                                {/*</tr>*/}
-                                {/*<tr>*/}
-                                {/*    <td>siswa 2</td>*/}
-                                {/*    <td>Edit</td>*/}
-                                {/*</tr>*/}
-
-                                {/*<tr>*/}
-                                {/*    <td>siswa 3</td>*/}
-                                {/*    <td>Edit</td>*/}
-                                {/*</tr>*/}
-
-                                {/*<tr>*/}
-                                {/*    <td rowSpan={2}>mentor 2</td>*/}
-                                {/*    <td>siswa 2</td>*/}
-                                {/*    <td>Edit</td>*/}
-
-                                {/*</tr>*/}
-
-                                {/*<tr>*/}
-                                {/*    <td>siswa 4</td>*/}
-                                {/*    <td>Edit</td>*/}
-                                {/*</tr>*/}
-
-                                {/*<tr>*/}
-                                {/*    <td>SELASA</td>*/}
-                                {/*    <td>mentor 2</td>*/}
-                                {/*    <td>siswa 2</td>*/}
-                                {/*    <td>Edit</td>*/}
-
-                                {/*</tr>*/}
                             </tbody>
                         </table>
                     </div>
