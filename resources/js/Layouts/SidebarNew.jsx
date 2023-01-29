@@ -18,7 +18,8 @@ const SidebarNew = ({ children }) => {
         //check token empty
         if (!token) {
             //redirect login page
-            history.push("/");
+            // history.push("/");
+            window.location.replace("/login")
         }
 
         //call function "fetchData"
