@@ -62,7 +62,20 @@ export default function TarifIndex({ tarifs, session }) {
                                 <tr className={"bg-white"} key={ index }>
                                     <td className="border border-1 bg-white border-gray-200">{ tarif.program.program_name }</td>
                                     <td className="border border-1 bg-white border-gray-200">{ tarif.kelas.kelas_name }</td>
-                                    <td className="border border-1 bg-white border-gray-200">Rp{ formatPrice(tarif.tarif_belajar)  }</td>
+                                    <td className="border border-1 bg-white border-gray-200">
+                                        {tarif.program.id === 2&& (
+                                            <div className=" text-lg font-normal">
+                                                Rp{ formatPrice(tarif.tarif_belajar)  }
+                                                <span className="font-normal text-sm text-gray-500"> / Bulan</span>
+                                            </div>
+                                        )}
+                                        {tarif.program.id === 1&& (
+                                            <div className=" text-lg font-normal">
+                                                Rp{ formatPrice(tarif.tarif_belajar)  }
+                                                <span className="font-normal text-sm text-gray-500"> / Sesi</span>
+                                            </div>
+                                        )}
+                                    </td>
                                     <td className="border border-1 bg-white border-gray-200">Rp{ formatPrice(tarif.tarif_tentor)  }</td>
 
                                     <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">

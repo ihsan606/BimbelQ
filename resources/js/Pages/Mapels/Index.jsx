@@ -49,7 +49,7 @@ export default function MapelIndex({ mapels, session }) {
                             { mapels.map((mapel, index) => (
                                 <tr className={"bg-white"} key={ index }>
                                     <td className="border border-1 bg-white border-gray-200">{ mapel.mapels_name }</td>
-                                    <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
+                                    <td className=" bg-white border border-1 bg-white border-gray-200">
                                         <Link href={`/mapels/${mapel.id}/edit`}>
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="32" height="32" rx="3" fill="#6EC889"/>
