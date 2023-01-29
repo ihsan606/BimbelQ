@@ -66,6 +66,7 @@ export default function ClassIndex({ jadwal_bimbels, session }) {
                                                     </td>
                                                 </tr>
                                                 {
+
                                                     sesi.tentors.map((tentor, i)=>(
                                                         <>
                                                             {sesi.tentors[index].id != tentor.id && (
