@@ -52,7 +52,7 @@ export default function SiswaIndex({ siswas, session }) {
                                     <td className="border border-1 bg-white border-gray-200">{ siswa.siswa_name }</td>
                                     <td className="border border-1 bg-white border-gray-200">{ siswa.siswa_email }</td>
                                     <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
-                                        <Link href={`/class/${siswa.id}/edit`}>
+                                        <Link href={`/siswas/${siswa.id}/edit`}>
                                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="32" height="32" rx="3" fill="#6EC889"/>
                                                 <path d="M6.99854 21.4613V24.5013C6.99854 24.7813 7.21854 25.0013 7.49854 25.0013H10.5385C10.6685 25.0013 10.7985 24.9513 10.8885 24.8513L21.8085 13.9413L18.0585 10.1913L7.14854 21.1013C7.04854 21.2013 6.99854 21.3213 6.99854 21.4613Z" fill="white"/>

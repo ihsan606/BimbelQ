@@ -86,7 +86,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::findOrFail($id);
 
-        return Inertia::render('Siswas/Index', [
+        return Inertia::render('Siswas/Edit', [
             'siswa' =>$siswa
         ]);
     }
@@ -103,21 +103,26 @@ class SiswaController extends Controller
         /**
          * validate
          */
-        $this->validate($request, [
-            'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_nama'   => 'required',
+        $validator = Validator::make($request->all(), [
+            'siswa_email'      => 'required|email',
+            'siswa_name'   => 'required',
         ]);
 
-        $siswas = Siswa::findOrFail($id);
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        //update siswas
-        $siswas->update([
+        $siswa = Siswa::findOrFail($id);
+
+
+        //update siswa
+        $siswa->update([
             'siswa_email'      => $request->siswa_email,
-            'siswa_nama'   => $request->siswa_nama,
+            'siswa_name'   => $request->siswa_name,
         ]);
 
-        //redirect
-        return $siswas;
+        return redirect()->route('siswas.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**

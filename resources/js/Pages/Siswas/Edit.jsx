@@ -1,63 +1,35 @@
-import * as React from 'react';
-// import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import styled from "styled-components";
-import Layout from '../../Layouts/SideMenu';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import { useState } from 'react'
-import { router } from '@inertiajs/react'
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+//import React
+import React, {useState} from 'react';
 import swal from 'sweetalert';
+
+
+//import Link
+import { Link } from '@inertiajs/inertia-react';
+import Layout from "../../Layouts/Default";
+import SidebarNew from "../../Layouts/SidebarNew";
+import axios from "axios";
 import {Inertia} from "@inertiajs/inertia";
 
-const Wrapper = styled.section`
-  padding: 4em;
-`;
+export default function EditClass({ errors, siswa }) {
 
-export default function Edit({ siswa }) {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+    const [siswaName, setSiswaName] = useState(siswa.siswa_name);
+    const [siswaEmail, setSiswaEmail] = useState(siswa.siswa_email);
+    const [validation, setValidation] = useState([]);
+    // const MySwal = withReactContent(Swal)
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const [values, setValues] = useState({
-        siswa_nama: siswa.siswa_name,
-        siswa_email: siswa.siswa_email,
-        siswa_password: "",
-        siswa_password_confirmation: ""
-    })
-
-    function handleChange(e) {
-        const key = e.target.id;
-        const value = e.target.value
-        setValues(values => ({
-            ...values,
-            [key]: value,
-        }))
-      }
-    
-    const submitEdit = (e) => {
+    const submitSiswa = async (e)=>{
         e.preventDefault();
 
+        const formData = new FormData();
+
+        //append data to formData
+        formData.append('siswa_name', siswaName);
+        formData.append('siswa_email', siswaEmail);
+
+
         Inertia.put(`/siswas/${siswa.id}`, {
-            siswa_name: siswa.siswa_nama,
-            siswa_email: siswa.siswa_email,
+            siswa_name: siswaName,
+            siswa_email: siswaEmail
         })
 
         swal({
@@ -65,96 +37,64 @@ export default function Edit({ siswa }) {
             text: "Data Siswa Berhasil Diupdate!",
             icon: "success",
             buttons: false
+
         });
+
+
     }
 
+
+
     return (
-        <Layout>
-            <Wrapper>
-                <form onSubmit={submitEdit}>
-                {/* <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': { m: 1, width: '25ch' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                > 
-                            
-                </Box> */}
-                    <Stack spacing={3} direction="column">
-                        <h2>Form Edit Siswa</h2>
+        <SidebarNew>
+            <div className=" w-full  rounded-lg shadow-xl pb-4 ">
+                <div className="header mb-3 bg-[#E1F4FF] px-3 border border-1 py-3 font-semibold text-2xl text-gray-600  shadow-none rounded-t-lg drop-shadow-none ">
+                    EDIT SISWA
+                </div>
+                <form onSubmit={submitSiswa}>
+                    <div className="grid grid-cols-4">
+                        <div className="col-span-3 ml-5 mt-2">
+                            <label htmlFor="first_name"
+                                   className="block text-sm mb-1 font-semibold text-gray-500 dark:text-white">Nama Siswa</label>
+                            <input type="text" id="first_name"
+                                   value={siswaName}
+                                   onChange={(e) => setSiswaName(e.target.value)}
+                                   className="bg-gray-50 dark:bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   placeholder="Nama..."/>
+                            <label htmlFor="siswa_email"
+                                   className="block text-sm mb-1 mt-2 font-semibold text-gray-500 dark:text-white">Email Siswa</label>
+                            <input type="text" id="siswa_email"
+                                   value={siswaEmail}
+                                   onChange={(e) => setSiswaEmail(e.target.value)}
+                                   className="bg-gray-50 dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   placeholder="Email..."/>
+                            {validation.siswa_name && (
+                                <div className="bg-white text-center py-1 lg:px-4">
+                                    <div className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                                        <span className="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-bold mr-3">Warning</span>
+                                        <span className="font-semibold mr-2 text-left flex-auto">{validation.siswa_name[0]}</span>
+                                        <svg className="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+                                    </div>
+                                </div>
+                            )}
+                            {validation.siswa_email && (
+                                <div className="bg-white text-center py-1 lg:px-4">
+                                    <div className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                                        <span className="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-bold mr-3">Warning</span>
+                                        <span className="font-semibold mr-2 text-left flex-auto">{validation.siswa_email[0]}</span>
+                                        <svg className="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <button type="submit" className="h-10 mt-8 bg-[#1597E5] text-gray-200 mx-4 rounded-lg shadow-lg font-semibold">
+                            SUBMIT
+                        </button>
+                    </div>
 
-                        <TextField 
-                            id="siswa_nama" 
-                            label="Nama" 
-                            variant="outlined" 
-                            required 
-                            value={values.siswa_nama}
-                            onChange={handleChange}
-                        />
-
-                        <TextField 
-                            id="siswa_email" 
-                            label="Email" 
-                            variant="outlined" 
-                            required 
-                            value={values.siswa_email}
-                            onChange={handleChange}
-                        />
-
-                        <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-                            <InputLabel htmlFor="siswa_password">Password</InputLabel>
-                            <OutlinedInput
-                                id="siswa_password"
-                                type={showPassword ? 'text' : 'password'}
-                                required
-                                value={values.siswa_password}
-                                onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                            />
-                        </FormControl>
-
-                        <FormControl sx={{ m: 1, width: '100%' }} variant="outlined">
-                            <InputLabel htmlFor="siswa_password_confirmation">Confirm Password</InputLabel>
-                            <OutlinedInput
-                                id="siswa_password_confirmation"
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                required
-                                value={values.siswa_password_confirmation}
-                                onChange={handleChange}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowConfirmPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Confirm Password"
-                            />
-                        </FormControl>
-
-                        <Button variant="contained" type='submit'>Edit</Button>
-                    </Stack>
                 </form>
-            </Wrapper>
-        </Layout>
+
+            </div>
+        </SidebarNew>
     )
 }
