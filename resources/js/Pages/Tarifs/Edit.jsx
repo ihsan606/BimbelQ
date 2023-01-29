@@ -62,7 +62,7 @@ export default function EditTarif({ errors, session, programs, clases, tarif }) 
 
     // const MySwal = withReactContent(Swal)
 
-    const submitTarif = async (e)=>{
+    const submitTarif =  (e)=>{
         e.preventDefault();
 
         const formData = new FormData();

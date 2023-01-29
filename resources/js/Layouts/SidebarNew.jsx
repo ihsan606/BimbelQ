@@ -52,7 +52,8 @@ const SidebarNew = ({ children }) => {
                                 BimbelQ
                             </span>
                         </div>
-                        <ul className="mt-12">
+                            <hr/>
+                        <ul className="mt-1">
                             <li
                                 className={
                                     currentPath === "home"
