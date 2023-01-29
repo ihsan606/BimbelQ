@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('siswa_name');
             $table->string('siswa_email');
             $table->string('siswa_phone_number');
-
             // $table->string('siswa_email')->unique();
             // $table->timestamp('siswa_email_verified_at')->nullable();
             // $table->string('siswa_password');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('tentors_id');
             $table->unsignedBigInteger('jadwal_bimbels_id');
-            $table->boolean('absensi_status');
+            $table->boolean('absensi_status')->default(false);
             // $table->time('jam_masuk');
             $table->timestamps();
 

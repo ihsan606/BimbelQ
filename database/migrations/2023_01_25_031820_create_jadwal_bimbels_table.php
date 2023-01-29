@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sesis_id');
             $table->unsignedBigInteger('programs_x_kelas_id');
             // $table->unsignedBigInteger('mapels_id');
-            $table->unsignedBigInteger('tentors_id');
+            $table->unsignedBigInteger('tentor_id');
             // $table->date('tanggal_bimbel');
             $table->timestamps();
 
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('sesis_id')->references('id')->on('sesis');
             $table->foreign('programs_x_kelas_id')->references('id')->on('programs_x_kelas');
             // $table->foreign('mapels_id')->references('id')->on('mapels');
-            $table->foreign('tentors_id')->references('id')->on('tentors');
+            $table->foreign('tentor_id')->references('id')->on('tentors');
 
 
         });

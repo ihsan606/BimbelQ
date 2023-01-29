@@ -8,28 +8,28 @@ import SidebarNew from "../../Layouts/SidebarNew";
 import { Inertia } from "@inertiajs/inertia";
 import swal from "sweetalert";
 
-export default function TentorIndex({ tentors, session }) {
-    const deleteTentor = async (id) => {
-        Inertia.delete(`/tentors/${id}`);
+export default function SiswaAbsensiIndex({ siswa_absensis, session }) {
+    const deleteSiswaAbsensi = async (id) => {
+        Inertia.delete(`/siswa_s/${id}`);
 
         await swal({
             title: "SUCCESS!",
-            text: "Data Tentor Berhasil Dihapus!",
+            text: "Data Kelas Berhasil Dihapus!",
             icon: "success",
             buttons: false,
         });
     };
 
-    // const formatPrice = (value)=>{
-    //     let val = (value/1).toFixed(0).replace('.', ',')
-    //     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    // }
+    const formatPrice = (value) => {
+        let val = (value / 1).toFixed(0).replace(".", ",");
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
 
     return (
         <SidebarNew>
             <div>
                 <Link
-                    href="/tentors/create"
+                    href="/tarifs/create"
                     className="btn text-white gap-x-2 shadow-lg btn-success btn-md ml-8"
                 >
                     <svg
@@ -44,7 +44,7 @@ export default function TentorIndex({ tentors, session }) {
                             fill="white"
                         />
                     </svg>
-                    TAMBAH TENTOR
+                    TAMBAH TARIF
                 </Link>
 
                 <div className=" border-0 rounded shadow-sm">
@@ -56,31 +56,25 @@ export default function TentorIndex({ tentors, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        NAMA
+                                        PROGRAM
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        EMAIL
+                                        KELAS
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        NO. HP/ NO. TELP
+                                        TARIF BELAJAR
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        MATA PELAJARAN
-                                    </th>
-                                    <th
-                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
-                                        scope="col"
-                                    >
-                                        SESI
+                                        TARIF MENTOR
                                     </th>
 
                                     <th
@@ -92,27 +86,24 @@ export default function TentorIndex({ tentors, session }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tentors.map((tentor, index) => (
+                                {tarifs.map((tarif, index) => (
                                     <tr className={"bg-white"} key={index}>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tentor.tentors_name}
+                                            {tarif.program.program_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tentor.tentors_email}
+                                            {tarif.kelas.kelas_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tentor.tentors_phone_number}
+                                            Rp{formatPrice(tarif.tarif_belajar)}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {tentor.mapel.mapels_name}
-                                        </td>
-                                        <td className="border border-1 bg-white border-gray-200">
-                                            {tentor.sesi.sesi_name}
+                                            Rp{formatPrice(tarif.tarif_tentor)}
                                         </td>
 
                                         <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
                                             <Link
-                                                href={`/tentors/${tentor.id}/edit`}
+                                                href={`/tarifs/${tarif.id}/edit`}
                                             >
                                                 <svg
                                                     width="32"
@@ -139,7 +130,7 @@ export default function TentorIndex({ tentors, session }) {
                                             </Link>
                                             <button
                                                 onClick={() =>
-                                                    deleteTentor(tentor.id)
+                                                    deleteClass(tarif.id)
                                                 }
                                             >
                                                 <svg

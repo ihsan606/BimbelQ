@@ -27,6 +27,10 @@ class Tentor extends Model
         return $this->belongsTo(Mapel::class, 'mapels_id', 'id');
     }
 
+    public function sesi(){
+        return $this->belongsTo(Sesi::class, 'sesi_id', 'id');
+    }
+
     protected function tentorsName(): Attribute
     {
         return Attribute::make(
