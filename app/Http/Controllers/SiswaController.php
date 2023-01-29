@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -52,11 +53,18 @@ class SiswaController extends Controller
         /**
          * validate
          */
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'siswa_email'      => 'required|email|unique:siswas',
             'siswa_password'   => 'required|confirmed',
             'siswa_nama'   => 'required',
         ]);
+
+        //if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
 
         //create siswa
         $siswa = Siswa::create([
