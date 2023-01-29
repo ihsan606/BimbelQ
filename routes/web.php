@@ -44,7 +44,10 @@ Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
 
 Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
 
+Route::resource('/jadwal-bimbels',\App\Http\Controllers\JadwalBimbelController::class);
+
 Route::get('/jadwalbimbingan', [\App\Http\Controllers\JadwalBimbinganController::class, 'index']);
+
 Route::get('/jadwalbimbingan/create', [\App\Http\Controllers\JadwalBimbinganController::class, 'store']);
 
 Route::resource('/program', \App\Http\Controllers\ProgramController::class);

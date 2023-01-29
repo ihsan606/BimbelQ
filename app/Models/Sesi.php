@@ -10,8 +10,12 @@ class Sesi extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function jadwal_bimbel(){
-        return $this->hasMany(jadwal_bimbel::class);
+    public function jadwal_bimbels(){
+        return $this->hasMany(jadwal_bimbel::class, 'sesis_id','id');
+    }
+
+    public function tentors(){
+        return $this->hasMany(Tentor::class);
     }
 
 
