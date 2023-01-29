@@ -56,7 +56,7 @@ class SiswaController extends Controller
 
         $validator = Validator::make($request->all(), [
             'siswa_email'      => 'required|email|unique:siswas',
-            'siswa_nama'   => 'required',
+            'siswa_name'   => 'required',
         ]);
 
         //if validation fails
@@ -68,7 +68,7 @@ class SiswaController extends Controller
         //create siswa
         $siswa = Siswa::create([
             'siswa_email'      => $request->siswa_email,
-            'siswa_name'   => $request->siswa_nama,
+            'siswa_name'   => $request->siswa_name,
         ]);
 
         //redirect
