@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('gaji_tentors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tentor_id');
+            $table->unsignedBigInteger('tentors_id');
             $table->integer('total_gaji');
             $table->string('bulan');
             $table->timestamps();
 
-            $table->foreign('tentor_id')->references('id')->on('tentors');
+            $table->foreign('tentors_id')->references('id')->on('tentors');
         });
     }
 

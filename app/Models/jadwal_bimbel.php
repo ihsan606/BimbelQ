@@ -10,19 +10,17 @@ class jadwal_bimbel extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function siswas(){
-        return $this->hasMany(Siswa::class);
+    public function siswa(){
+        return $this->belongsTo(Siswa::class,'siswas_id','id');
     }
 
     public function sesi(){
         return $this->belongsTo(Sesi::class);
     }
 
-    public function program_x_kelas(){
-        return $this->belongsTo(Programs_x_kelas::class);
+    public function programs_x_kelas(){
+        return $this->belongsTo(Programs_x_kelas::class,'programs_x_kelas_id','id');
     }
-
-
 
     public function tentor(){
         return $this->belongsTo(Tentor::class);

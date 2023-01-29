@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import SidebarNew from "../../Layouts/SidebarNew";
 
-export default function Home({  }) {
+export default function Home({ tentors, siswas }) {
     //token
     const token = localStorage.getItem("token");
 
@@ -110,7 +110,7 @@ export default function Home({  }) {
                             </div>
                             <div className="flex-1 text-right">
                                 <h2 className="font-normal text-sm uppercase text-gray-600">Siswa</h2>
-                                <p className="font-normal text-xl">100 <span className="text-pink-500"><i
+                                <p className="font-normal text-xl">{siswas.length}<span className="text-pink-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ export default function Home({  }) {
                             </div>
                             <div className="flex-1 text-right ">
                                 <h2 className="font-normal text-sm uppercase text-gray-600">Mentor</h2>
-                                <p className="font-normal text-xl">12 <span className="text-blue-500"><i
+                                <p className="font-normal text-xl">{tentors.length}<span className="text-blue-500"><i
                                     className="fas fa-exchange-alt"></i></span></p>
                             </div>
                         </div>

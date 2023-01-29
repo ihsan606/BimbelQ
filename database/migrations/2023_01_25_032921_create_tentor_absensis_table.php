@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('tentor_absensis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tentor_id');
-            $table->unsignedBigInteger('jadwal_bimbel_id');
-            $table->boolean('absensi_status');
-            $table->time('jam_masuk');
+            $table->unsignedBigInteger('tentors_id');
+            $table->unsignedBigInteger('jadwal_bimbels_id');
+            $table->boolean('absensi_status')->default(false);
+            // $table->time('jam_masuk');
             $table->timestamps();
 
 
-            $table->foreign('tentor_id')->references('id')->on('tentors');
-            $table->foreign('jadwal_bimbel_id')->references('id')->on('jadwal_bimbels');
+            $table->foreign('tentors_id')->references('id')->on('tentors');
+            $table->foreign('jadwal_bimbels_id')->references('id')->on('jadwal_bimbels');
 
         });
     }

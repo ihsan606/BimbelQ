@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('siswa_name');
-            $table->string('siswa_email')->unique();
-            $table->timestamp('siswa_email_verified_at')->nullable();
-            $table->string('siswa_password');
-            $table->rememberToken();
+            $table->string('siswa_email');
+            $table->string('siswa_phone_number');
+            // $table->string('siswa_email')->unique();
+            // $table->timestamp('siswa_email_verified_at')->nullable();
+            // $table->string('siswa_password');
+            // $table->rememberToken();
             $table->timestamps();
         });
     }
