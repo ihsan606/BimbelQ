@@ -28,6 +28,17 @@ class TentorController extends Controller
 
     }
 
+    public function getBySesiId(Request $request){
+        if($request->id){
+            $tentors = Tentor::with('mapel')->where('sesi_id', $request->id)->get();
+            return $tentors;
+        }
+
+        return Tentor::with('mapel')->get();
+
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,6 +63,7 @@ class TentorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mapels_id'          => 'required',
+            'sesi_id'          => 'required',
             'tentors_name'        => 'required',
             'tentors_email'        => 'required',
             'tentors_phone_number'        => 'required'
@@ -73,6 +85,7 @@ class TentorController extends Controller
 
         $tentor = Tentor::create([
             'mapels_id'             => $request->mapels_id,
+            'sesi_id'             => $request->sesi_id,
             'tentors_name'        => $request->tentors_name,
             'tentors_email'        => $request->tentors_email,
             'tentors_phone_number'        => $request->tentors_phone_number
@@ -117,6 +130,7 @@ class TentorController extends Controller
 
 
         $validator = Validator::make($request->all(), [
+            'sesi_id'          => 'required',
             'mapels_id'          => 'required',
             'tentors_name'        => 'required',
             'tentors_email'        => 'required',
@@ -135,6 +149,7 @@ class TentorController extends Controller
 
         //update kelas
         $tentor->update([
+            'sesi_id'          => $request->sesi_id,
             'mapels_id'          => $request->mapels_id,
             'tentors_name'        => $request->tentors_name,
             'tentors_email'        => $request->tentors_email,
