@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/register',[\App\Http\Controllers\RegisterController::class, 'register'])->name('register');
+Route::post('/register',[\App\Http\Controllers\RegisterController::class, 'store']);
 
 Route::post('/auth/login',[\App\Http\Controllers\LoginController::class, 'login'])->name('login');
 
@@ -43,6 +43,8 @@ Route::resource('/mapels', \App\Http\Controllers\MapelController::class);
 Route::resource('/siswas', \App\Http\Controllers\SiswaController::class);
 
 Route::resource('/tarifs', \App\Http\Controllers\TarifController::class);
+
+Route::get('/tagihan', [\App\Http\Controllers\TagihanController::class,'index']);
 
 Route::resource('/jadwal-bimbels',\App\Http\Controllers\JadwalBimbelController::class);
 

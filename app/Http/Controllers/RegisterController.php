@@ -13,7 +13,7 @@ class RegisterController extends Controller
         return inertia('Register/Index');
     }
 
-    public function register(Request $request)
+    public function store(Request $request)
     {
         //set validation
         $validator = Validator::make($request->all(), [
