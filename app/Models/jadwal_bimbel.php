@@ -10,8 +10,8 @@ class jadwal_bimbel extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function siswa(){
-        return $this->belongsTo(Siswa::class);
+    public function siswas(){
+        return $this->hasMany(Siswa::class);
     }
 
     public function sesi(){
@@ -22,9 +22,7 @@ class jadwal_bimbel extends Model
         return $this->belongsTo(Programs_x_kelas::class);
     }
 
-    public function mapel(){
-        return $this->belongsTo(Mapel::class);
-    }
+
 
     public function tentor(){
         return $this->belongsTo(Tentor::class);

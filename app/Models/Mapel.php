@@ -15,9 +15,9 @@ class Mapel extends Model
         return $this->hasMany(Tentor::class);
     }
 
-    public function jadwal_bimbel(){
-        return $this->hasMany(jadwal_bimbel::class);
-    }
+//    public function jadwal_bimbel(){
+//        return $this->hasMany(jadwal_bimbel::class);
+//    }
 
     protected function mapelsName(): Attribute
     {
