@@ -10,17 +10,36 @@ import axios from "axios";
 import {Inertia} from "@inertiajs/inertia";
 import Select from "react-select";
 
-export default function EditJadwal({ errors, session, siswas, sesis, program_x_kelases, tentors }) {
+export default function EditJadwal({ errors, session, siswas, sesis, program_x_kelases, tentors, jadwal}) {
 
-    const [siswaId, setSiswaId] = useState("");
-    const [sesiId, setSesiId] = useState("");
-    const [programXkelasId, setProgramXkelasId] = useState("");
-    const [tentorId, setTentorId] = useState("");
+    const [siswaId, setSiswaId] = useState(jadwal.siswa.id);
+    const [sesiId, setSesiId] = useState(jadwal.sesi.id);
+    const [programXkelasId, setProgramXkelasId] = useState(jadwal.programs_x_kelas.id);
+    const [tentorId, setTentorId] = useState(jadwal.tentor.id);
     const [validation, setValidation] = useState([]);
     const [siswaOptions, setSiswaOptions] = useState([""])
     const [sesiOptions, setSesiOptions] = useState([""])
     const [programXKelasesOptions, setProgramXKelasesOptions] = useState([""])
     const [tentorOptions, setTentorOptions] = useState([""])
+
+
+    const [siswaDefault, setSiswaDefault] = useState({
+        value: jadwal.siswa.id,
+        label: jadwal.siswa.siswa_name
+    })
+
+    const [sesiDefault, setSesiDefault] = useState({
+        value: jadwal.sesi.id,
+        label: jadwal.sesi.sesi_name
+    })
+
+    const [programXkelasDefault, setprogramXkelasDefault] = useState({
+        value: jadwal.programs_x_kelas.id, label: `${jadwal.programs_x_kelas.program.program_name} - ${jadwal.programs_x_kelas.kelas.kelas_name}`
+    })
+
+    const [tentorDefault, setTentorDefault] = useState(
+        {value: jadwal.tentor.id, label: `${jadwal.tentor.tentors_name} (mentor) - ${jadwal.tentor.mapel.mapels_name}`}
+    )
 
 
     const handleSiswaChange = (selectedOption) => {
@@ -90,12 +109,15 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
         formData.append('programs_x_kelas_id', programXkelasId);
         formData.append('tentor_id', tentorId);
 
-        await axios.post('/jadwal-bimbels', formData)
+        Inertia.put(`/jadwal-bimbels/${jadwal.id}`, {
+            siswa_id: siswaId,
+            sesi_id: sesiId,
+            programs_x_kelas_id: programXkelasId,
+            tentor_id: tentorId
+        })
 
-            .then((res)=>{
-                // console.log(res)
-                // localStorage.setItem('token', res.data.token)
-                Inertia.get('/jadwal-bimbels')
+
+                // Inertia.get('/jadwal-bimbels')
                 swal({
                     title: "SUCCESS!",
                     text: "Data Jadwal Berhasil Ditambahkan!",
@@ -106,15 +128,6 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
 
 
 
-            })
-
-            .catch((errors)=>{
-                setValidation(errors.response.data)
-                console.log(errors.response.data)
-                console.log("--------", errors.response.data)
-            })
-
-
     }
 
 
@@ -123,7 +136,7 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
         <SidebarNew>
             <div className=" w-full  rounded-lg shadow-xl pb-4 ">
                 <div className="header mb-3 bg-[#E1F4FF] px-3 border border-1 py-3 font-normal text-2xl text-gray-600  shadow-none rounded-t-lg drop-shadow-none ">
-                    TAMBAH JADWAL BIMBEL
+                    EDIT JADWAL BIMBEL
                 </div>
                 <form onSubmit={submitKelas}>
                     <div className="grid grid-cols-4 gap-x-4 px-5">
@@ -136,6 +149,7 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
                                 Siswa
                             </label>
                             <Select
+                                defaultValue={siswaDefault}
                                 onChange={handleSiswaChange}
                                 id="siswa"
                                 className="bg-gray-50 w-full dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -172,6 +186,7 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
                                 Sesi
                             </label>
                             <Select
+                                defaultValue={sesiDefault}
                                 onChange={handleSesiChange}
                                 id="sesi"
                                 className="bg-gray-50 w-full dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -209,6 +224,7 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
                                 Program / Kelas
                             </label>
                             <Select
+                                defaultValue={programXkelasDefault}
                                 onChange={handleProgramChange}
                                 id="program"
                                 className="bg-gray-50 w-full dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -246,6 +262,7 @@ export default function EditJadwal({ errors, session, siswas, sesis, program_x_k
                                 Tentor / Mapel
                             </label>
                             <Select
+                                defaultValue={tentorDefault}
                                 isDisabled={sesiId==""}
                                 onChange={handelTentorChange}
                                 id="tentor"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\siswa_absensi;
 use App\Models\Siswa;
 use App\Models\jadwal_bimbel;
+use App\Models\tagihan_siswa;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -94,6 +95,50 @@ class KehadiranSiswaController extends Controller
             'jadwal_bimbels_id'             => $request->jadwal_bimbel_id,
             'absensi_status'        => $request->absensi_status
         ]);
+
+        if($kehadiran->absensi_status ==1){
+            $jadwal = jadwal_bimbel::with('siswa','programs_x_kelas.program','programs_x_kelas.kelas')->where('siswas_id',$request->siswa_id)->first();
+            if($jadwal){
+                $programXkelas  = $jadwal->programs_x_kelas;
+                $month = date('F');
+                //if siswa reguler
+                if($programXkelas->program->id == 2){
+                    //cek if exist invoice this month
+                    $invoice = tagihan_siswa::where([
+                        ['siswas_id',"=",$request->siswa_id],
+                        ['bulan', "=", $month],
+                    ])->first();
+                    if(!$invoice){
+                        tagihan_siswa::create([
+                            'siswas_id'=> $request->siswa_id,
+                            'total_tagihan' => $programXkelas->tarif_belajar,
+                            'bulan' => $month
+                        ]);
+                    }
+
+                }else{
+                    //check if invoice exist
+                    $invoice = tagihan_siswa::where([
+                        ['siswas_id',"=",$request->siswa_id],
+                        ['bulan', "=", $month]
+                    ])->first();
+
+                    if($invoice){
+                        $invoice->update([
+                            'total_tagihan' => $invoice->total_tagihan + $programXkelas->tarif_belajar
+                        ]);
+                    }else{
+                        tagihan_siswa::create([
+                            'siswas_id'=> $request->siswa_id,
+                            'total_tagihan' => $programXkelas->tarif_belajar,
+                            'bulan' => $month
+                        ]);
+                    }
+
+                }
+            }
+
+        }
 
         return $kehadiran;
     }

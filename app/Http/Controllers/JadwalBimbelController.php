@@ -113,10 +113,10 @@ class JadwalBimbelController extends Controller
      */
     public function edit($id)
     {
-        $tarif = Programs_x_kelas::findOrFail($id)->with('program','kelas');
+        $tarif = jadwal_bimbel::findOrFail($id);
 
         if($tarif){
-            $tarif = Programs_x_kelas::with('program','kelas')->whereId($id)->first();
+            $tarif = jadwal_bimbel::with('siswa','sesi','programs_x_kelas.program','tentor.mapel','programs_x_kelas.kelas')->whereId($id)->first();
         }
 
         $programs = Program::all();
@@ -130,6 +130,7 @@ class JadwalBimbelController extends Controller
 
 
         return inertia('JadwalBimbel/Edit', [
+            'jadwal'=> $tarif,
             'siswas' => $siswas,
             'sesis' => $sesis,
             'program_x_kelases' => $program_x_kelases,
@@ -149,10 +150,11 @@ class JadwalBimbelController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'program_id'          => 'required',
-            'kelas_id'             => 'required',
-            'tarif_belajar'        => 'required',
-            'tarif_tentor'        => 'required'
+            'siswa_id'          => 'required',
+            'sesi_id'             => 'required',
+            'programs_x_kelas_id'        => 'required',
+            'tentor_id'        => 'required'
+
         ]);
 
         //if validation fails
@@ -161,48 +163,43 @@ class JadwalBimbelController extends Controller
         }
 
 
+        $jadwal = jadwal_bimbel::whereId($id)->first();
 
 
-        $tarif = Programs_x_kelas::whereId($id)->first();
 
-        $checkTarif = Programs_x_kelas::where([
-            ['programs_id',"=",$request->program_id],
-            ['kelas_id',"=",$request->kelas_id]
+
+        $checkSiswa = jadwal_bimbel::where([
+            ['siswas_id',"=",$request->siswa_id],
+            ['sesis_id',"=",$request->sesis_id]
         ])->first();
 
-        if($checkTarif){
-//            return "ada yang sama";
-            if($checkTarif->id == $id){
-                $checkTarif->update([
-                    'programs_id'          => $request->program_id,
-                    'kelas_id'             => $request->kelas_id,
-                    'tarif_belajar'        => $request->tarif_belajar,
-                    'tarif_tentor'        => $request->tarif_tentor
-                ]);
 
-                return redirect()->route('tarifs.index')->with('success', 'Data Berhasil Diupdate!');
-            }else{
-                return response()->json([
-                    'program_id' =>["duplicate combination program and kelas"],
-                    'kelas_id' => ["duplicate combination program and kelas"]
-                ], 422);
-
-            }
+        if($checkSiswa){
+            return response()->json([
+                'siswas_id' =>["siswa sudah mengambil mapel lain di sesi yang sama"],
+                'sesis_id' => ["siswa sudah mengambil mapel lain di sesi yang sama"]
+            ], 422);
         }
 
 
-
-
-
-        //update kelas
-        $tarif->update([
-            'programs_id'          => $request->program_id,
-            'kelas_id'             => $request->kelas_id,
-            'tarif_belajar'        => $request->tarif_belajar,
-            'tarif_tentor'        => $request->tarif_tentor
+        $jadwal->update([
+            'siswas_id'          => $request->siswa_id,
+            'sesis_id'             =>  $request->sesi_id,
+            'programs_x_kelas_id'        => $request->programs_x_kelas_id,
+            'tentor_id'        => $request->tentor_id
         ]);
 
-        return redirect()->route('tarifs.index')->with('success', 'Data Berhasil Diupdate!');
+
+
+
+
+
+
+
+
+
+
+        return redirect()->route('jadwal-bimbels.index')->with('success', 'Data Berhasil Diupdate!');
     }
 
     /**
