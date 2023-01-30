@@ -224,7 +224,7 @@ export default function CreateKehadiran({
                         </div>
                         <button
                             type="submit"
-                            className="h-10 mt-8 bg-[#1597E5] col-span-1 col-start-4 text-gray-200 rounded-lg shadow-lg font-semibold"
+                            className="h-10 mt-11 bg-[#1597E5] col-span-2 col-start-3 text-gray-200 rounded-lg shadow-lg font-semibold"
                         >
                             SUBMIT
                         </button>
