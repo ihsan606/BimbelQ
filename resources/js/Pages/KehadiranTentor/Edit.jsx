@@ -14,11 +14,11 @@ import { Inertia } from "@inertiajs/inertia";
 export default function EditKehadiran({
     errors,
     session,
-    siswas,
+    tentors,
     jadwal_bimbels,
     kehadirans,
 }) {
-    const [siswaId, setSiswaId] = useState(kehadirans.siswa.id);
+    const [tentorsId, setTentorsId] = useState(kehadirans.tentor.id);
     const [jadwalBimbelId, setJadwalBimbelId] = useState(
         kehadirans.jadwal_bimbel.id
     );
@@ -26,17 +26,17 @@ export default function EditKehadiran({
         kehadirans.absensi_status
     );
     const [validation, setValidation] = useState([]);
-    const [siswaOptions, setSiswaOptions] = useState([""]);
+    const [tentorOptions, setTentorOptions] = useState([""]);
     const [jadwalBimbelOptions, setJadwalBimbelOptions] = useState([""]);
     const [absensiOptions, setAbsensiOptions] = useState([""]);
 
-    const [siswaDefault, setSiswaDefault] = useState({
-        value: kehadirans.siswa.id,
-        label: kehadirans.siswa.siswa_name,
+    const [tentorDefault, setTentorDefault] = useState({
+        value: kehadirans.tentor.id,
+        label: kehadirans.tentor.tentors_name,
     });
     const [jadwalBimbelDefault, setJadwalBimbelDefault] = useState({
         value: kehadirans.jadwal_bimbel.id,
-        label: `${kehadirans.jadwal_bimbel.siswa.siswa_name} - ${kehadirans.jadwal_bimbel.programs_x_kelas.program.program_name} - ${kehadirans.jadwal_bimbel.programs_x_kelas.kelas.kelas_name} - ${kehadirans.jadwal_bimbel.tentor.mapel.mapels_name} - ${kehadirans.jadwal_bimbel.sesi.sesi_name}`,
+        label: `${kehadirans.jadwal_bimbel.tentor.tentors_name} - ${kehadirans.jadwal_bimbel.programs_x_kelas.program.program_name} - ${kehadirans.jadwal_bimbel.programs_x_kelas.kelas.kelas_name} - ${kehadirans.jadwal_bimbel.tentor.mapel.mapels_name} - ${kehadirans.jadwal_bimbel.sesi.sesi_name}`,
     });
     const [absensiDefault, setAbsensiDefault] = useState({
         value: kehadirans.absensi_status,
@@ -57,29 +57,32 @@ export default function EditKehadiran({
                     label: "Hadir",
                 },
             ];
-            siswas.map((siswa, index) => {
-                return arr.push({ value: siswa.id, label: siswa.siswa_name });
+            tentors.map((tentor, index) => {
+                return arr.push({
+                    value: tentor.id,
+                    label: tentor.tentors_name,
+                });
             });
 
             jadwal_bimbels.map((jadwal) => {
                 return arr2.push({
                     value: jadwal.id,
-                    label: `${jadwal.siswa.siswa_name} - ${jadwal.programs_x_kelas.program.program_name} - ${jadwal.programs_x_kelas.kelas.kelas_name} - ${jadwal.tentor.mapel.mapels_name} - ${jadwal.sesi.sesi_name}`,
+                    label: `${jadwal.tentor.tentors_name} - ${jadwal.programs_x_kelas.program.program_name} - ${jadwal.programs_x_kelas.kelas.kelas_name} - ${jadwal.tentor.mapel.mapels_name} - ${jadwal.sesi.sesi_name}`,
                 });
             });
 
-            setSiswaOptions(arr);
+            setTentorOptions(arr);
 
             setJadwalBimbelOptions(arr2);
 
             setAbsensiOptions(arr3);
         };
         getData();
-        console.log(siswaOptions);
+        console.log(tentorOptions);
     }, []);
 
-    const handleSiswaChange = (selectedOption) => {
-        setSiswaId(selectedOption.value);
+    const handleTentorChange = (selectedOption) => {
+        setTentorsId(selectedOption.value);
     };
 
     const handleJadwalChange = (selectedOption) => {
@@ -99,8 +102,8 @@ export default function EditKehadiran({
 
         //append data to formData
 
-        Inertia.put(`/kehadiransiswa/${kehadirans.id}`, {
-            siswa_id: siswaId,
+        Inertia.put(`/kehadirantentor/${kehadirans.id}`, {
+            tentors_id: tentorsId,
             jadwal_bimbels_id: jadwalBimbelId,
             absensi_status: absensiStatus,
         });
@@ -124,19 +127,19 @@ export default function EditKehadiran({
                     <div className="grid grid-cols-4 gap-x-4 px-5">
                         <div className="col-span-2 my-2">
                             <label
-                                htmlFor="nama_siswa"
+                                htmlFor="nama_tentor"
                                 className="block text-sm mb-1 font-normal text-gray-500 dark:text-white"
                             >
-                                Pilih Siswa
+                                Pilih Tentor
                             </label>
                             <Select
-                                defaultValue={siswaDefault}
-                                onChange={handleSiswaChange}
-                                id="nama_siswa"
+                                defaultValue={tentorDefault}
+                                onChange={handleTentorChange}
+                                id="nama_tentor"
                                 className="bg-gray-50 w-full dark:bg-gray-50 text-gray-700 dark:text-gray-700 border border-gray-300 dark:border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                options={siswaOptions}
+                                options={tentorOptions}
                             />
-                            {validation.siswa_id && (
+                            {validation.tentors_id && (
                                 <div className="bg-white text-center py-1 lg:px-4">
                                     <div
                                         className="p-2 bg-yellow-800 items-center text-yellow-100 leading-none lg:rounded-full flex lg:inline-flex"
@@ -146,7 +149,7 @@ export default function EditKehadiran({
                                             Warning
                                         </span>
                                         <span className="font-normal mr-2 text-left flex-auto">
-                                            {validation.siswa_id[0]}
+                                            {validation.tentors_id[0]}
                                         </span>
                                         <svg
                                             className="fill-current opacity-75 h-4 w-4"

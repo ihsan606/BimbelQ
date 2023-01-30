@@ -59,6 +59,7 @@ Route::resource('/tentors', \App\Http\Controllers\TentorController::class);
 
 Route::resource('/kehadiransiswa', \App\Http\Controllers\KehadiranSiswaController::class);
 
+Route::resource('/kehadirantentor', \App\Http\Controllers\KehadiranTentorController::class);
 Route::get('/tentor-by-sesi',[\App\Http\Controllers\TentorController::class,'getBySesiId']);
 
 

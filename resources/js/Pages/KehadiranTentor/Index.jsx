@@ -11,11 +11,11 @@ import swal from "sweetalert";
 
 export default function KehadiranSiswaIndex({ kehadirans, session }) {
     const deleteKehadiran = async (id) => {
-        Inertia.delete(`/kehadiransiswa/${id}`);
+        Inertia.delete(`/kehadirantentor/${id}`);
 
         await swal({
             title: "SUCCESS!",
-            text: "Data Kehadiran Siswa Berhasil Dihapus!",
+            text: "Data Kehadiran Tentor Berhasil Dihapus!",
             icon: "success",
             buttons: false,
         });
@@ -30,7 +30,7 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
         <SidebarNew>
             <div>
                 <Link
-                    href="/kehadiransiswa/create"
+                    href="/kehadirantentor/create"
                     className="btn text-white gap-x-2 shadow-lg btn-success btn-md ml-8"
                 >
                     <svg
@@ -48,7 +48,7 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                     TAMBAH KEHADIRAN
                 </Link>
 
-                <div className=" border-0 rounded shadow-sm">
+                <div className="border-0 rounded shadow-sm">
                     <div className="card-body">
                         <table className="table table-auto bg-white shadow-lg rounded-lg">
                             <thead className="bg-[#E1F4FF]">
@@ -57,7 +57,7 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
-                                        NAMA SISWA
+                                        NAMA TENTOR
                                     </th>
                                     <th
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
@@ -81,6 +81,13 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                         className="bg-[#E1F4FF] text-[#1597E5] font-medium"
                                         scope="col"
                                     >
+                                        JAM MASUK
+                                    </th>
+
+                                    <th
+                                        className="bg-[#E1F4FF] text-[#1597E5] font-medium"
+                                        scope="col"
+                                    >
                                         STATUS
                                     </th>
 
@@ -96,7 +103,7 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                 {kehadirans.map((kehadiran, index) => (
                                     <tr className={"bg-white"} key={index}>
                                         <td className="border border-1 bg-white border-gray-200">
-                                            {kehadiran.siswa.siswa_name}
+                                            {kehadiran.tentor.tentors_name}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
                                             {
@@ -104,18 +111,18 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                                     .programs_x_kelas.program
                                                     .program_name
                                             }
-                                            {" - "}
+                                            <br />
                                             {
                                                 kehadiran.jadwal_bimbel
                                                     .programs_x_kelas.kelas
                                                     .kelas_name
                                             }
-                                            {" - "}
+                                            <br />
                                             {
                                                 kehadiran.jadwal_bimbel.tentor
                                                     .mapel.mapels_name
                                             }
-                                            {" - "}
+                                            <br />
                                             {
                                                 kehadiran.jadwal_bimbel.sesi
                                                     .sesi_name
@@ -139,18 +146,20 @@ export default function KehadiranSiswaIndex({ kehadirans, session }) {
                                             )}
                                         </td>
                                         <td className="border border-1 bg-white border-gray-200">
+                                            {moment
+                                                .utc(kehadiran.updated_at)
+                                                .format("lll")
+                                                .substring(13, 18)}
+                                        </td>
+
+                                        <td className="border border-1 bg-white border-gray-200">
                                             {kehadiran.absensi_status == 0
                                                 ? "Tidak Hadir"
                                                 : "Hadir"}
                                         </td>
-
-                                        {/* <td className="border border-1 bg-white border-gray-200">
-                                            {kehadiran.tentor.tentors_name}
-                                        </td> */}
-
-                                        <td className="text-center grid grid-cols-2 bg-white border border-1 bg-white border-gray-200">
+                                        <td className="text-center grid grid-cols-2 grid-rows-3 bg-white border border-1 bg-white border-gray-200">
                                             <Link
-                                                href={`/kehadiransiswa/${kehadiran.id}/edit`}
+                                                href={`/kehadirantentor/${kehadiran.id}/edit`}
                                             >
                                                 <svg
                                                     width="32"
